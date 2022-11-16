@@ -8,6 +8,10 @@ import java.sql.Statement;
 public class Product {
 
     private final DBConnection dbConnection = new DBConnection();
+
+    private PreparedStatement productprice = null;
+    private final String getProductPrice= "select Price from product where ID=?;";
+
     private Statement stmt = null;
     private ResultSet rs = null;
 
@@ -42,6 +46,23 @@ public class Product {
         }
     }
 
+    public double getproductPrice(String ID){
+        try {
+            if (dbConnection.getCon() == null) {
+                //errorMessages = "You must establish a connection first!";
+                return -1;
+            }
+            productprice = dbConnection.getCon().prepareStatement(getProductPrice);
+            productprice.setString(1,ID);
+            rs = productprice.executeQuery();
+            rs.next();
+            return Double.parseDouble(rs.getString("Price"));
+        } catch (Exception e5) {
+            //errorMessages = "Error while getting all students from database!<br>"
+            //+ e5.getMessage();
+            return -1;
+        }
+    }
     public void close() {
         try {
             if (stmt != null)
