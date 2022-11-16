@@ -40,7 +40,7 @@
 <br>
 <br>
 
-<form class="container text-center was-validated" onsubmit="return confirm('Do you really want to submit the form?');">
+<form class="container text-center was-validated" action="SaleServlet" onsubmit="return confirm('Do you really want to submit the form?');">
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="input-group mb-3">

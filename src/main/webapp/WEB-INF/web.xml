@@ -33,4 +33,14 @@
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <description/>
+        <display-name>SaleServlet</display-name>
+        <servlet-name>SaleServlet</servlet-name>
+        <servlet-class>com.example.webapp.SaleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SaleServlet</servlet-name>
+        <url-pattern>/SaleServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

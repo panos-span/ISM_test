@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
         }
 
         session.setAttribute("role", role);
-        response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
+        response.sendRedirect("http://localhost:8080/WebApp_war/index.jsp");
 
     }
 

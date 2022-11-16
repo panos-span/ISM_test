@@ -16,6 +16,6 @@ public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         doPost(request, response);
-        response.sendRedirect("http://localhost:8080/WebApp_war_exploded/login.jsp");
+        response.sendRedirect("http://localhost:8080/WebApp_war/login.jsp");
     }
 }
