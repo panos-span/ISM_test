@@ -1,5 +1,6 @@
 package com.example.webapp;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,17 +19,23 @@ public class SaleServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String[] paramNames = {"customer", "product", "date", "quantity"};
         String[] params = new String[5];
-        for (int i=0;i<4; i++){
-            params[i]=request.getParameter(paramNames[i]);
+        for (int i = 0; i < 4; i++) {
+            params[i] = request.getParameter(paramNames[i]);
         }
-        params[0]=getSearchId(params[0]);
-        params[1]=getSearchId(params[1]);
+        params[0] = getSearchId(params[0]);
+        params[1] = getSearchId(params[1]);
         Product product = new Product();
         double price = product.getproductPrice(params[1]);
-        double salevalue = price * Double.parseDouble(params[3]);
-        params[4]= String.valueOf(salevalue);
+        int quantity = Integer.parseInt(params[3]);
+        double salevalue = price * quantity;
+        params[4] = String.valueOf(salevalue);
+        product.close();
         Sale sale = new Sale();
         sale.insertNewSale(params);
+        sale.close();
+        request.setAttribute("action", "true");
+        RequestDispatcher rd = request.getRequestDispatcher("/manageSale.jsp");
+        rd.forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

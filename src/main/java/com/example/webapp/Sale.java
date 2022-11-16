@@ -1,10 +1,9 @@
 package com.example.webapp;
 
-import java.security.SecureRandom;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.text.SimpleDateFormat;
 
 
 public class Sale {
@@ -15,8 +14,7 @@ public class Sale {
 
     private ResultSet rs = null;
 
-    private final String insertSaleQuery= "insert into sales (Cust_id, Prod_id, Sale_Date, Quantity, Sale_Value) values (?,?,?,?,?);";
-
+    private final String insertSaleQuery = "insert into sale (Cust_id, Prod_id, Sale_Date, Quantity, Sale_Value) values (?,?,?,?,?);";
 
 
     public Sale() {
@@ -45,12 +43,10 @@ public class Sale {
             return;
             //throw new SQLException(errorMessages); String id,String name,String surname,String vat,String address,String email,String details
         }
-
         try {
             stmt = dbConnection.getCon().prepareStatement(insertSaleQuery);
-            int index=0;
-            for (int i=0;i<5;i++){
-                stmt.setString(i+1,params[i]);
+            for (int i = 0; i < 5; i++) {
+                stmt.setString(i + 1, params[i]);
             }
             stmt.executeUpdate();
             stmt.close();

@@ -1,6 +1,7 @@
 <%@ page import="com.example.webapp.Customer" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="com.example.webapp.Product" %>
+<%@ page import="java.time.LocalDateTime" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +29,34 @@
     if (!role.equals("Salesman")) {
         response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
     }
+    String action = (String) request.getAttribute("action");
+
+    boolean f1 = action != null;
+    int hour = LocalDateTime.now().getHour();
+    int minutes = LocalDateTime.now().getMinute();
+    if (f1) {
 %>
+<!-- Flexbox container for aligning the toasts -->
+<div aria-live="polite" aria-atomic="true" class="toast-container bottom-0 end-0">
+
+    <!-- Then put toasts within -->
+    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Insert Sale</strong>
+            <small><%=hour%>:<%=minutes%>
+            </small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body text-black">
+            Insert was successful
+        </div>
+    </div>
+</div>
+
+<%
+    }
+%>
+
 
 <jsp:include page="header.jsp">
     <jsp:param name="role" value="<%=role%>"/>
@@ -40,7 +68,8 @@
 <br>
 <br>
 
-<form class="container text-center was-validated" action="SaleServlet" onsubmit="return confirm('Do you really want to submit the form?');">
+<form class="container text-center was-validated" action="SaleServlet"
+      onsubmit="return confirm('Do you really want to submit the form?');">
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="input-group mb-3">

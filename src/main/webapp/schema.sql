@@ -48,7 +48,7 @@ CREATE TABLE Sale
     Prod_id    INT      NOT NULL REFERENCES Product (ID)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    Sale_Date  DATETIME NOT NULL,
+    Sale_Date  VARCHAR(10) NOT NULL,
     Quantity   INT      NOT NULL,
     Sale_Value FLOAT    NOT NULL,
     CONSTRAINT SA PRIMARY KEY (Cust_id, Prod_id, Sale_Date)
