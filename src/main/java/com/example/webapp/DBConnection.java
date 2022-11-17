@@ -1,7 +1,9 @@
 package com.example.webapp;
 
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class DBConnection {
     private String errorMessages = "";

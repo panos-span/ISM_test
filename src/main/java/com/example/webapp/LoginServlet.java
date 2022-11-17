@@ -29,7 +29,9 @@ public class LoginServlet extends HttpServlet {
         }
 
         session.setAttribute("role", role);
-        response.sendRedirect("http://localhost:8080/ISM_test_war/index.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+        rd.forward(request, response);
+        //response.sendRedirect("http://localhost:8080/WebApp_war/index.jsp");
 
     }
 

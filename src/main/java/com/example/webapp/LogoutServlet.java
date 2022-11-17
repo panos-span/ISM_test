@@ -1,5 +1,7 @@
 package com.example.webapp;
 
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import java.io.IOException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,8 +16,10 @@ public class LogoutServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws IOException, ServletException {
         doPost(request, response);
-        response.sendRedirect("http://localhost:8080/ISM_test_war/login.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+        rd.forward(request, response);
+        //response.sendRedirect("http://localhost:8080/WebApp_war/login.jsp");
     }
 }
