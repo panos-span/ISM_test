@@ -17,11 +17,11 @@
     String role = (String) session.getAttribute("role");
 
     if (!(role == null)) {
-        response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
-        return;
-    }
+        //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
 %>
+<jsp:forward page="index.jsp"/>
 <%
+    }
     //String failed = (String) session.getAttribute("failed");
     String failed = (String) request.getAttribute("failed");
     boolean f = Boolean.parseBoolean(failed);

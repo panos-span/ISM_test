@@ -23,11 +23,18 @@
     String role = (String) session.getAttribute("role");
 
     if (role == null) {
-        response.sendRedirect("http://localhost:8080/WebApp_war_exploded/login.jsp");
+        //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/login.jsp");
+%>
+<jsp:forward page="login.jsp"/>
+<%
     }
 
     if (!role.equals("Salesman")) {
-        response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
+        //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
+
+%>
+<jsp:forward page="index.jsp"/>
+<%
     }
     String action = (String) request.getAttribute("action");
 
@@ -78,16 +85,71 @@
                        placeholder="Select Customer" aria-label="Search" required>
                 <datalist id="customer_list">
                     <%
-                        Customer customer = new Customer();
-                        ResultSet rs = customer.getAllCustomers();
-                        if (rs == null) {
-                            throw new Exception("Error");
+                        Customer
+                                customer
+                                =
+                                new
+                                        Customer
+                                        (
+                                        );
+                        ResultSet
+                                rs
+                                =
+                                customer
+                                        .
+                                        getAllCustomers
+                                                (
+                                                );
+                        if
+                        (
+                                rs
+                                        ==
+                                        null
+                        ) {
+                            throw
+                                    new
+                                            Exception
+                                            (
+                                                    "Error"
+                                            )
+                                    ;
                         }
 
-                        while (rs.next()) {
-                            String name = rs.getString("Name");
-                            String surname = rs.getString("Surname");
-                            String id = rs.getString("id");
+                        while
+                        (
+                                rs
+                                        .
+                                        next
+                                                (
+                                                )
+                        ) {
+                            String
+                                    name
+                                    =
+                                    rs
+                                            .
+                                            getString
+                                                    (
+                                                            "Name"
+                                                    );
+                            String
+                                    surname
+                                    =
+                                    rs
+                                            .
+                                            getString
+                                                    (
+                                                            "Surname"
+                                                    );
+                            String
+                                    id
+                                    =
+                                    rs
+                                            .
+                                            getString
+                                                    (
+                                                            "id"
+                                                    );
 
                     %>
                     <option value="<%=name + " " + surname + " (ID=" + id+")"%>">
@@ -109,15 +171,62 @@
                        placeholder="Select Product" aria-label="Search" required>
                 <datalist id="products_list">
                     <%
-                        Product product = new Product();
-                        ResultSet rs1 = product.getAllProducts();
-                        if (rs1 == null) {
-                            throw new Exception("Error");
+                        Product
+                                product
+                                =
+                                new
+                                        Product
+                                        (
+                                        );
+                        ResultSet
+                                rs1
+                                =
+                                product
+                                        .
+                                        getAllProducts
+                                                (
+                                                );
+                        if
+                        (
+                                rs1
+                                        ==
+                                        null
+                        ) {
+                            throw
+                                    new
+                                            Exception
+                                            (
+                                                    "Error"
+                                            )
+                                    ;
                         }
 
-                        while (rs1.next()) {
-                            String name = rs1.getString("Name");
-                            String id = rs1.getString("id");
+                        while
+                        (
+                                rs1
+                                        .
+                                        next
+                                                (
+                                                )
+                        ) {
+                            String
+                                    name
+                                    =
+                                    rs1
+                                            .
+                                            getString
+                                                    (
+                                                            "Name"
+                                                    );
+                            String
+                                    id
+                                    =
+                                    rs1
+                                            .
+                                            getString
+                                                    (
+                                                            "id"
+                                                    );
                     %>
                     <option value="<%=name + " (ID=" + id+")"%>">
                             <%

@@ -20,12 +20,19 @@
     String role = (String) session.getAttribute("role");
 
     if (role == null) {
-        response.sendRedirect("http://localhost:8080/WebApp_war_exploded/login.jsp");
+%>
+<jsp:forward page="login.jsp"/>
+<%
+        //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/login.jsp");
     }
 
     if (!role.equals("Salesman")) {
-        response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
+%>
+<jsp:forward page="index.jsp"/>
+<%
     }
+    //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
+
 
 %>
 
@@ -40,7 +47,8 @@
 
 <div class="container text-center">
     <!-- Search -->
-    <form action="" type="POST" class="was-validated" onsubmit="return confirm('Do you really want to submit the form?');">
+    <form action="" type="POST" class="was-validated"
+          onsubmit="return confirm('Do you really want to submit the form?');">
         <div class="row justify-content-center">
             <div class="col-lg-6">
 

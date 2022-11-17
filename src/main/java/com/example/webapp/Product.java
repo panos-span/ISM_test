@@ -10,13 +10,10 @@ public class Product {
     private final DBConnection dbConnection = new DBConnection();
 
     private PreparedStatement productprice = null;
-    private final String getProductPrice= "select Price from product where ID=?;";
+    private final String getProductPrice = "select Price from product where ID=?;";
 
     private Statement stmt = null;
     private ResultSet rs = null;
-
-    private PreparedStatement stmt1 = null, stmt2 = null;
-    private PreparedStatement search = null;
 
     public Product() {
         try {
@@ -46,14 +43,14 @@ public class Product {
         }
     }
 
-    public double getproductPrice(String ID){
+    public double getproductPrice(String ID) {
         try {
             if (dbConnection.getCon() == null) {
                 //errorMessages = "You must establish a connection first!";
                 return -1;
             }
             productprice = dbConnection.getCon().prepareStatement(getProductPrice);
-            productprice.setString(1,ID);
+            productprice.setString(1, ID);
             rs = productprice.executeQuery();
             rs.next();
             return Double.parseDouble(rs.getString("Price"));
@@ -63,6 +60,7 @@ public class Product {
             return -1;
         }
     }
+
     public void close() {
         try {
             if (stmt != null)

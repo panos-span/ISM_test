@@ -23,12 +23,20 @@
     String role = (String) session.getAttribute("role");
 
     if (role == null) {
-        response.sendRedirect("http://localhost:8080/WebApp_war_exploded/login.jsp");
+%>
+<jsp:forward page="login.jsp"/>
+<%
     }
+    //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/login.jsp");
+
 
     if (!role.equals("Product Manager")) {
-        response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
+%>
+<jsp:forward page="index.jsp"/>
+<%
     }
+    //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
+
 
     String action = (String) request.getAttribute("action");
 
@@ -62,7 +70,6 @@
 <%
     }
 %>
-
 
 
 <jsp:include page="header.jsp">

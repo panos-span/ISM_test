@@ -21,11 +21,17 @@
     String role = (String) session.getAttribute("role");
 
     if (role == null) {
-        response.sendRedirect("http://localhost:8080/WebApp_war_exploded/login.jsp");
+%>
+<jsp:forward page="login.jsp"/>
+<%
+        //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/login.jsp");
     }
 
     if (!role.equals("Salesman")) {
-        response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
+%>
+<jsp:forward page="index.jsp"/>
+<%
+    //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
     }
 
 %>
@@ -42,7 +48,8 @@
             <div class="col-lg-8">
                 <div class="input-group mb-3">
                     <div class="form-floating">
-                        <input class="form-control" name="customer" list="search_customers_list" type="search" id="search_customers"
+                        <input class="form-control" name="customer" list="search_customers_list" type="search"
+                               id="search_customers"
                                placeholder="Add Customer" aria-label="Search">
                         <datalist id="search_customers_list">
                             <%
@@ -78,7 +85,8 @@
             <div class="col-lg-8">
                 <div class="input-group mb-3">
                     <div class="form-floating">
-                        <input class="form-control" list="search_products_list" name="product" type="search" id="search_products"
+                        <input class="form-control" list="search_products_list" name="product" type="search"
+                               id="search_products"
                                placeholder="Add Product" aria-label="Search">
                         <datalist id="search_products_list">
                             <%

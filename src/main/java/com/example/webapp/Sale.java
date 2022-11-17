@@ -3,20 +3,14 @@ package com.example.webapp;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-
 
 public class Sale {
 
     private DBConnection dbConnection = new DBConnection();
-
     private PreparedStatement stmt = null;
-
     private ResultSet rs = null;
-
     private final String insertSaleQuery = "insert into sale (Cust_id, Prod_id, Sale_Date, Quantity, Sale_Value) values (?,?,?,?,?);";
-
-    private final String getCostumerSales= "select * from sale where Cust_id=?;";
+    private final String getCustomerSales = "select * from sale where Cust_id=?;";
 
 
     public Sale() {
@@ -57,16 +51,16 @@ public class Sale {
         }
     }
 
-    public ResultSet getallcostumersales(String cust_id){
+    public ResultSet getAllCustomersales(String cust_id) {
         if (dbConnection.getCon() == null) {
             return null;
         }
         try {
-            stmt=dbConnection.getCon().prepareStatement(getCostumerSales);
-            stmt.setString(1,cust_id);
-            rs= stmt.executeQuery();
+            stmt = dbConnection.getCon().prepareStatement(getCustomerSales);
+            stmt.setString(1, cust_id);
+            rs = stmt.executeQuery();
             return rs;
-        } catch (Exception ignored){
+        } catch (Exception ignored) {
 
         }
         return null;
