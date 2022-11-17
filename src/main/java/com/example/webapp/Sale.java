@@ -16,6 +16,8 @@ public class Sale {
 
     private final String insertSaleQuery = "insert into sale (Cust_id, Prod_id, Sale_Date, Quantity, Sale_Value) values (?,?,?,?,?);";
 
+    private final String getCostumerSales= "select * from sale where Cust_id=?;";
+
 
     public Sale() {
         try {
@@ -53,6 +55,21 @@ public class Sale {
         } catch (Exception ignored) {
 
         }
+    }
+
+    public ResultSet getallcostumersales(String cust_id){
+        if (dbConnection.getCon() == null) {
+            return null;
+        }
+        try {
+            stmt=dbConnection.getCon().prepareStatement(getCostumerSales);
+            stmt.setString(1,cust_id);
+            rs= stmt.executeQuery();
+            return rs;
+        } catch (Exception ignored){
+
+        }
+        return null;
     }
 
 }
