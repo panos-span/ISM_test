@@ -51,7 +51,7 @@ public class Sale {
         }
     }
 
-    public ResultSet getAllCustomersales(String cust_id) {
+    public ResultSet getAllCustomerSales(String cust_id) {
         if (dbConnection.getCon() == null) {
             return null;
         }
