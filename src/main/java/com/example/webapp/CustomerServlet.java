@@ -33,7 +33,7 @@ public class CustomerServlet extends HttpServlet {
             inputs++;
         }
 
-        Customer customer = new Customer();
+        CustomerDAO customer = new CustomerDAO();
         HttpSession session = request.getSession(true);
         String id = (String) session.getAttribute("edit");
         String action;

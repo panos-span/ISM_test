@@ -1,6 +1,6 @@
-<%@ page import="com.example.webapp.Customer" %>
+<%@ page import="com.example.webapp.CustomerDAO" %>
 <%@ page import="java.sql.ResultSet" %>
-<%@ page import="com.example.webapp.Product" %>
+<%@ page import="com.example.webapp.ProductDAO" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
@@ -85,71 +85,16 @@
                        placeholder="Select Customer" aria-label="Search" required>
                 <datalist id="customer_list">
                     <%
-                        Customer
-                                customer
-                                =
-                                new
-                                        Customer
-                                        (
-                                        );
-                        ResultSet
-                                rs
-                                =
-                                customer
-                                        .
-                                        getAllCustomers
-                                                (
-                                                );
-                        if
-                        (
-                                rs
-                                        ==
-                                        null
-                        ) {
-                            throw
-                                    new
-                                            Exception
-                                            (
-                                                    "Error"
-                                            )
-                                    ;
+                        CustomerDAO customer = new CustomerDAO();
+                        ResultSet rs = customer.getAllCustomers();
+                        if (rs == null) {
+                            throw new Exception("Error");
                         }
 
-                        while
-                        (
-                                rs
-                                        .
-                                        next
-                                                (
-                                                )
-                        ) {
-                            String
-                                    name
-                                    =
-                                    rs
-                                            .
-                                            getString
-                                                    (
-                                                            "Name"
-                                                    );
-                            String
-                                    surname
-                                    =
-                                    rs
-                                            .
-                                            getString
-                                                    (
-                                                            "Surname"
-                                                    );
-                            String
-                                    id
-                                    =
-                                    rs
-                                            .
-                                            getString
-                                                    (
-                                                            "id"
-                                                    );
+                        while (rs.next()) {
+                            String name = rs.getString("Name");
+                            String surname = rs.getString("Surname");
+                            String id = rs.getString("id");
 
                     %>
                     <option value="<%=name + " " + surname + " (ID=" + id+")"%>">
@@ -171,62 +116,15 @@
                        placeholder="Select Product" aria-label="Search" required>
                 <datalist id="products_list">
                     <%
-                        Product
-                                product
-                                =
-                                new
-                                        Product
-                                        (
-                                        );
-                        ResultSet
-                                rs1
-                                =
-                                product
-                                        .
-                                        getAllProducts
-                                                (
-                                                );
-                        if
-                        (
-                                rs1
-                                        ==
-                                        null
-                        ) {
-                            throw
-                                    new
-                                            Exception
-                                            (
-                                                    "Error"
-                                            )
-                                    ;
+                        ProductDAO product = new ProductDAO();
+                        ResultSet rs1 = product.getAllProducts();
+                        if (rs1 == null) {
+                            throw new Exception("Error");
                         }
 
-                        while
-                        (
-                                rs1
-                                        .
-                                        next
-                                                (
-                                                )
-                        ) {
-                            String
-                                    name
-                                    =
-                                    rs1
-                                            .
-                                            getString
-                                                    (
-                                                            "Name"
-                                                    );
-                            String
-                                    id
-                                    =
-                                    rs1
-                                            .
-                                            getString
-                                                    (
-                                                            "id"
-                                                    );
+                        while (rs1.next()) {
+                            String name = rs1.getString("Name");
+                            String id = rs1.getString("id");
                     %>
                     <option value="<%=name + " (ID=" + id+")"%>">
                             <%
@@ -262,7 +160,7 @@
     <div class="container text-center">
         <div class="row justify-content-center"></div>
         <div class="d-grid gap-2 col-8 mx-auto">
-            <button class="btn btn-primary" type="submit">Submit</button>
+            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
         </div>
 
     </div>

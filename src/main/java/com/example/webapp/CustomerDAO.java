@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Customer {
+public class CustomerDAO {
 
     private final DBConnection dbConnection = new DBConnection();
     private Statement stmt = null;
@@ -21,7 +21,7 @@ public class Customer {
     //private final String editCustomerPhonesQuery = "update customer_phones set Phone=? WHERE (ID=?);";
     private final String deleteCustomerPhonesQuery = "delete from customer_phones WHERE (ID=?);";
 
-    public Customer() {
+    public CustomerDAO() {
         try {
             dbConnection.open();
         } catch (SQLException e) {

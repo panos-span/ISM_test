@@ -1,4 +1,4 @@
-<%@ page import="com.example.webapp.Customer" %>
+<%@ page import="com.example.webapp.CustomerDAO" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
@@ -57,7 +57,7 @@
                            placeholder="Search Existing Customer" aria-label="Search" required>
                     <datalist id="search_list">
                         <%
-                            Customer customer = new Customer();
+                            CustomerDAO customer = new CustomerDAO();
                             ResultSet rs = customer.getAllCustomers();
                             if (rs == null) {
                                 throw new Exception("Error");
@@ -149,7 +149,7 @@
             <br>
 
             <div class="d-grid gap-2 col-6 mx-auto">
-                <button class="btn btn-primary" type="submit">Extract</button>
+                <button class="btn btn-primary btn-lg" type="submit">Extract</button>
             </div>
         </div>
     </form>

@@ -43,4 +43,14 @@
         <servlet-name>SaleServlet</servlet-name>
         <url-pattern>/SaleServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <description/>
+        <display-name>PromoteServlet</display-name>
+        <servlet-name>PromoteServlet</servlet-name>
+        <servlet-class>com.example.webapp.PromoteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PromoteServlet</servlet-name>
+        <url-pattern>/PromoteServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

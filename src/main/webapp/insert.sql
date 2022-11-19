@@ -20,7 +20,7 @@ FROM customer
 WHERE ID=1;
 
 
-insert into sale (Cust_id, Prod_id, Sale_Date, Quantity, Sale_Value) values (12981,1,'1000-01-02',5,25);
+insert into sale (Cust_id, Prod_id, Sale_Date, Quantity, Sale_Value) values (12981,1,"1000-01-02",5,25);
 
 insert into customer (ID, Name, Surname, VAT, Address, Email, Details)
 values (12981,"Spyros","Gartop","5636543", "Paradisou 420, Thessaloniki","spyrakos@paradise.gr", "Gionis");

@@ -1,5 +1,8 @@
-<%@ page import="com.example.webapp.Customer" %>
+<%@ page import="com.example.webapp.CustomerDAO" %>
 <%@ page import="java.sql.ResultSet" %>
+<%@ page import="com.example.webapp.ProductDAO" %>
+<%@ page import="com.example.webapp.Customer" %>
+<%@ page import="com.example.webapp.Promote" %>
 <%@ page import="com.example.webapp.Product" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
@@ -31,7 +34,7 @@
 %>
 <jsp:forward page="index.jsp"/>
 <%
-    //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
+        //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
     }
 
 %>
@@ -43,7 +46,7 @@
 
 <!-- Search -->
 <div class="container text-center" style="margin-top: 100px">
-    <form role="search">
+    <form role="search" action="PromoteServlet" type="POST">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="input-group mb-3">
@@ -53,7 +56,7 @@
                                placeholder="Add Customer" aria-label="Search">
                         <datalist id="search_customers_list">
                             <%
-                                Customer customer = new Customer();
+                                CustomerDAO customer = new CustomerDAO();
                                 ResultSet rs = customer.getAllCustomers();
                                 if (rs == null) {
                                     throw new Exception("Error");
@@ -90,7 +93,7 @@
                                placeholder="Add Product" aria-label="Search">
                         <datalist id="search_products_list">
                             <%
-                                Product product = new Product();
+                                ProductDAO product = new ProductDAO();
                                 ResultSet rs1 = product.getAllProducts();
                                 if (rs1 == null) {
                                     throw new Exception("Error");
@@ -120,104 +123,144 @@
 <br>
 <br>
 <br>
-<!-- Tables-->
+
 <div class="container text-center">
+    <form action="PromoteServlet" type="POST">
+        <!-- Tables-->
+        <div class="row justify-content-evenly">
+            <div class="col-5">
+                <div class="table-responsive-md">
+                    <table class="table bg-white caption-top" id="client_table">
+                        <caption class="bg-white text-center"><h4>List of Clients </h4></caption>
+                        <thead>
+                        <tr>
+                            <th scope="col">#Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Surname</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                            for (Customer cust : Promote.getCustomers()) {
+                        %>
+                        <tr>
+                            <th scope="row"><%=cust.getId()%>
+                            </th>
+                            <td><%=cust.getName()%>
+                            </td>
+                            <td><%=cust.getSurname()%>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-danger small" value="<%=cust.toString()%>"
+                                        name="remove_client<%=cust.getId()%>"><i class="bi bi-dash-lg"></i></button>
+                                <input type="submit" class="visually-hidden" name="remove_client<%=cust.getId()%>"
+                                       value="<%=cust.toString()%>">
+                            </td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                        <input type="hidden" class="visually-hidden" name="client_number" id="client_number" value="">
+                        <!--<tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>
+                                <button type="button" class="btn btn-danger small"><i class="bi bi-dash-lg"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>
+                                <button type="button" class="btn btn-danger"><i class="bi bi-dash-lg"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>
+                                <button type="button" class="btn btn-danger"><i class="bi bi-dash-lg"></i></button>
+                            </td>
+                        </tr>-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-    <div class="row justify-content-evenly">
-        <div class="col-5">
-            <div class="table-responsive-md">
-                <table class="table bg-white caption-top">
-                    <caption class="bg-white text-center"><h4>List of Clients </h4></caption>
-                    <thead>
-                    <tr>
-                        <th scope="col">#Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Surname</th>
-                        <th scope="col"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>
-                            <button type="button" class="btn btn-danger small"><i class="bi bi-dash-lg"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>
-                            <button type="button" class="btn btn-danger"><i class="bi bi-dash-lg"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>
-                            <button type="button" class="btn btn-danger"><i class="bi bi-dash-lg"></i></button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="col-5">
+                <div class="table-responsive-md">
+                    <table class="table bg-white caption-top" id="product_table">
+                        <caption class="bg-white text-center"><h4>List of Products </h4></caption>
+                        <thead>
+                        <tr>
+                            <th scope="col">#Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                            for (Product prod : Promote.getProducts()) {
+                        %>
+                        <tr>
+                            <th scope="row"><%=prod.getId()%>
+                            </th>
+                            <td><%=prod.getName()%>
+                            </td>
+                            <td><%=prod.getPrice()%> <i class="bi bi-currency-euro"></i></td>
+                            <td>
+                                <button type="submit" class="btn btn-danger small" value="<%=prod.toString()%>"
+                                        name="remove_product<%=prod.getId()%>"><i class="bi bi-dash-lg"></i></button>
+                            </td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                        <input type="hidden" class="visually-hidden" name="product_number" id="product_number" value="">
+                        <!--<tr>
+                            <th scope="row">1</th>
+                            <td>Product A</td>
+                            <td>69 <i class="bi bi-currency-euro"></i></td>
+                            <td>
+                                <button type="button" class="btn btn-danger"><i class="bi bi-dash-lg"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Product B</td>
+                            <td>68 <i class="bi bi-currency-euro"></i></td>
+                            <td>
+                                <button type="button" class="btn btn-danger"><i class="bi bi-dash-lg"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Product C</td>
+                            <td>42069 <i class="bi bi-currency-euro"></i></td>
+                            <td>
+                                <button type="button" class="btn btn-danger"><i class="bi bi-dash-lg"></i></button>
+                            </td>
+                        </tr>-->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+        <br>
+        <br>
 
-        <div class="col-5">
-            <div class="table-responsive-md">
-                <table class="table bg-white caption-top">
-                    <caption class="bg-white text-center"><h4>List of Products </h4></caption>
-                    <thead>
-                    <tr>
-                        <th scope="col">#Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Product A</td>
-                        <td>69 <i class="bi bi-currency-euro"></i></td>
-                        <td>
-                            <button type="button" class="btn btn-danger"><i class="bi bi-dash-lg"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Product B</td>
-                        <td>68 <i class="bi bi-currency-euro"></i></td>
-                        <td>
-                            <button type="button" class="btn btn-danger"><i class="bi bi-dash-lg"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Product C</td>
-                        <td>42069 <i class="bi bi-currency-euro"></i></td>
-                        <td>
-                            <button type="button" class="btn btn-danger"><i class="bi bi-dash-lg"></i></button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <br>
-    <br>
-    <form action="" type="POST">
         <div class="d-grid gap-2 col-8 mx-auto">
-            <button class="btn btn-primary" type="submit">Submit</button>
+            <button class="btn btn-primary" type="submit" onclick="myFunction()">Submit</button>
         </div>
+
     </form>
 </div>
-
-
 </body>
 <!-- Scripts -->
 <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
@@ -229,9 +272,19 @@
         var i = r.parentNode.parentNode.rowIndex;
         document.getElementById("myTable").deleteRow(i);
     }*/
-    $('table').on('click', 'button[type="button"]', function (e) {
+    /*$('table').on('click', 'button[type="button"]', function (e) {
         $(this).closest('tr').remove()
-    })
+    })*/
+    function myFunction() {
+        var client_number = document.getElementById("client_table").rows.length;
+        var product_number = document.getElementById("product_table").rows.length;
+        var c = document.getElementById("client_number")
+        c.value = client_number
+        var p = document.getElementById("product_number")
+        p.value = product_number
+
+    }
+
     /*
     <button onclick="myCreateFunction()">Create row</button>
 <button onclick="myDeleteFunction()">Delete row</button>

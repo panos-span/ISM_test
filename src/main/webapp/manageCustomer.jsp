@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="com.example.webapp.Customer" %>
+<%@ page import="com.example.webapp.CustomerDAO" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.time.LocalDateTime" %>
 <!DOCTYPE html>
@@ -89,7 +89,7 @@
 
     String cust = request.getParameter("customer");
 
-    Customer customer = new Customer();
+    CustomerDAO customer = new CustomerDAO();
     String Name = "", Surname = "", Id = "", Vat = "", Email = "", Details = "";
     String[] Address = {"", ""};
     String[] phones = {"", ""};
@@ -251,7 +251,7 @@
         <br>
         <div class="container text-center">
             <div class="d-grid gap-2 col-6 mx-auto">
-                <button class="btn btn-primary" type="submit">Submit
+                <button class="btn btn-primary btn-lg" type="submit">Submit
                 </button>
             </div>
         </div>

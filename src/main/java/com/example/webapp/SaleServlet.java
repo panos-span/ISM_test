@@ -24,8 +24,8 @@ public class SaleServlet extends HttpServlet {
         }
         params[0] = getSearchId(params[0]);
         params[1] = getSearchId(params[1]);
-        Product product = new Product();
-        double price = product.getproductPrice(params[1]);
+        ProductDAO product = new ProductDAO();
+        double price = product.getProductPrice(params[1]);
         int quantity = Integer.parseInt(params[3]);
         double salevalue = price * quantity;
         params[4] = String.valueOf(salevalue);

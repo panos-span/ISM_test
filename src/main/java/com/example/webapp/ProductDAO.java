@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Product {
+public class ProductDAO {
 
     private final DBConnection dbConnection = new DBConnection();
 
@@ -15,7 +15,7 @@ public class Product {
     private Statement stmt = null;
     private ResultSet rs = null;
 
-    public Product() {
+    public ProductDAO() {
         try {
             dbConnection.open();
         } catch (SQLException e) {
@@ -43,7 +43,7 @@ public class Product {
         }
     }
 
-    public double getproductPrice(String ID) {
+    public double getProductPrice(String ID) {
         try {
             if (dbConnection.getCon() == null) {
                 //errorMessages = "You must establish a connection first!";

@@ -1,4 +1,4 @@
-<%@ page import="com.example.webapp.Product" %>
+<%@ page import="com.example.webapp.ProductDAO" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
@@ -87,7 +87,7 @@
                                placeholder="Search Existing Product" aria-label="Search">
                         <datalist id="search_list">
                             <%
-                                Product product = new Product();
+                                ProductDAO product = new ProductDAO();
                                 ResultSet rs = product.getAllProducts();
                                 if (rs == null) {
                                     throw new Exception("Error");
@@ -162,7 +162,7 @@
 
         <div class="row justify-content-center">
             <div class="d-grid gap-2 col-lg-8 mx-auto">
-                <button class="btn btn-primary " type="submit">Submit</button>
+                <button class="btn btn-primary btn-lg" type="submit">Submit</button>
             </div>
         </div>
 

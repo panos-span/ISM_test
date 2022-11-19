@@ -10,13 +10,12 @@ public class ProductServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+        response.setContentType("text/html;charset=UTF-8");
+        String[] paramNames;
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        /*
-         * If receive any get request redirect user back to login form.
-         */
         doPost(request, response);
     }
 }
