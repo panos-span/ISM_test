@@ -112,7 +112,6 @@
                                 <td>1</td>
                             </tr>
                             <tr>
-
                                 <td>143</td>
                                 <td>78 <i class="bi bi-currency-euro"></i></td>
                                 <td>1</td>

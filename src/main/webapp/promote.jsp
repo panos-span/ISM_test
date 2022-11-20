@@ -83,7 +83,7 @@
             </div>
         </div>
     </form>
-    <form role="search">
+    <form role="search" action="PromoteServlet" type="POST">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="input-group mb-3">
@@ -125,7 +125,7 @@
 <br>
 
 <div class="container text-center">
-    <form action="PromoteServlet" type="POST">
+    <form action="PromoteServlet" type="POST" onsubmit="myFunction();">
         <!-- Tables-->
         <div class="row justify-content-evenly">
             <div class="col-5">
@@ -153,40 +153,14 @@
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-danger small" value="<%=cust.toString()%>"
-                                        name="remove_client<%=cust.getId()%>"><i class="bi bi-dash-lg"></i></button>
-                                <input type="submit" class="visually-hidden" name="remove_client<%=cust.getId()%>"
-                                       value="<%=cust.toString()%>">
+                                        name="remove_client<%=cust.getId()%>"><i
+                                        class="bi bi-dash-lg"></i></button>
                             </td>
                         </tr>
                         <%
                             }
                         %>
                         <input type="hidden" class="visually-hidden" name="client_number" id="client_number" value="">
-                        <!--<tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>
-                                <button type="button" class="btn btn-danger small"><i class="bi bi-dash-lg"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>
-                                <button type="button" class="btn btn-danger"><i class="bi bi-dash-lg"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>
-                                <button type="button" class="btn btn-danger"><i class="bi bi-dash-lg"></i></button>
-                            </td>
-                        </tr>-->
                         </tbody>
                     </table>
                 </div>
@@ -216,37 +190,14 @@
                             <td><%=prod.getPrice()%> <i class="bi bi-currency-euro"></i></td>
                             <td>
                                 <button type="submit" class="btn btn-danger small" value="<%=prod.toString()%>"
-                                        name="remove_product<%=prod.getId()%>"><i class="bi bi-dash-lg"></i></button>
+                                        name="remove_product<%=prod.getId()%>"><i
+                                        class="bi bi-dash-lg"></i></button>
                             </td>
                         </tr>
                         <%
                             }
                         %>
                         <input type="hidden" class="visually-hidden" name="product_number" id="product_number" value="">
-                        <!--<tr>
-                            <th scope="row">1</th>
-                            <td>Product A</td>
-                            <td>69 <i class="bi bi-currency-euro"></i></td>
-                            <td>
-                                <button type="button" class="btn btn-danger"><i class="bi bi-dash-lg"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Product B</td>
-                            <td>68 <i class="bi bi-currency-euro"></i></td>
-                            <td>
-                                <button type="button" class="btn btn-danger"><i class="bi bi-dash-lg"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Product C</td>
-                            <td>42069 <i class="bi bi-currency-euro"></i></td>
-                            <td>
-                                <button type="button" class="btn btn-danger"><i class="bi bi-dash-lg"></i></button>
-                            </td>
-                        </tr>-->
                         </tbody>
                     </table>
                 </div>
@@ -256,7 +207,9 @@
         <br>
 
         <div class="d-grid gap-2 col-8 mx-auto">
-            <button class="btn btn-primary" type="submit" onclick="myFunction()">Submit</button>
+            <button class="btn btn-primary" type="submit"
+                    onclick="return confirm('Do you really want to submit the form?');">Submit
+            </button>
         </div>
 
     </form>
@@ -266,42 +219,15 @@
 <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
 <script src="js/scripts.js"></script> <!-- Custom scripts -->
 <script src="js/bootstrap.bundle.min.js"></script>
-<!--Remove table row-->
 <script>
-    /*function deleteRow(r) {
-        var i = r.parentNode.parentNode.rowIndex;
-        document.getElementById("myTable").deleteRow(i);
-    }*/
-    /*$('table').on('click', 'button[type="button"]', function (e) {
-        $(this).closest('tr').remove()
-    })*/
     function myFunction() {
         var client_number = document.getElementById("client_table").rows.length;
         var product_number = document.getElementById("product_table").rows.length;
         var c = document.getElementById("client_number")
-        c.value = client_number
+        c.value = client_number - 1
         var p = document.getElementById("product_number")
-        p.value = product_number
-
+        p.value = product_number - 1
     }
 
-    /*
-    <button onclick="myCreateFunction()">Create row</button>
-<button onclick="myDeleteFunction()">Delete row</button>
-
-<script>
-function myCreateFunction() {
-  var table = document.getElementById("myTable");
-  var row = table.insertRow(0);
-  var cell1 = row.insertCell(0);
-  var cell2 = row.insertCell(1);
-  cell1.innerHTML = "NEW CELL1";
-  cell2.innerHTML = "NEW CELL2";
-}
-
-function myDeleteFunction() {
-  document.getElementById("myTable").deleteRow(0);
-}
-     */
 </script>
 </html>

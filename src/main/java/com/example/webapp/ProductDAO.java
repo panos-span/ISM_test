@@ -11,6 +11,7 @@ public class ProductDAO {
 
     private PreparedStatement productprice = null;
     private final String getProductPrice = "select Price from product where ID=?;";
+    private final String searchProduct = ";";
 
     private Statement stmt = null;
     private ResultSet rs = null;
@@ -30,8 +31,6 @@ public class ProductDAO {
                 return null;
             }
             String selectAllProductsQuery = "";
-
-
             selectAllProductsQuery = "select Name,ID from product;";
             stmt = dbConnection.getCon().createStatement();
             rs = stmt.executeQuery(selectAllProductsQuery);
@@ -41,6 +40,11 @@ public class ProductDAO {
             //+ e5.getMessage();
             return null;
         }
+    }
+
+    public ResultSet searchProduct(String id) {
+
+        return null;
     }
 
     public double getProductPrice(String ID) {
@@ -55,8 +59,6 @@ public class ProductDAO {
             rs.next();
             return Double.parseDouble(rs.getString("Price"));
         } catch (Exception e5) {
-            //errorMessages = "Error while getting all students from database!<br>"
-            //+ e5.getMessage();
             return -1;
         }
     }

@@ -23,14 +23,12 @@
     String role = (String) session.getAttribute("role");
 
     if (role == null) {
-        //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/login.jsp");
 %>
 <jsp:forward page="login.jsp"/>
 <%
     }
 
     if (!role.equals("Salesman")) {
-        //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
 
 %>
 <jsp:forward page="index.jsp"/>
