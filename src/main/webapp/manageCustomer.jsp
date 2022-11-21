@@ -251,7 +251,7 @@
         <br>
         <div class="container text-center">
             <div class="d-grid gap-2 col-6 mx-auto">
-                <button class="btn btn-primary btn-lg" type="submit">Submit
+                <button class="btn btn-primary btn-lg" type="submit" id="button"><%=(cust != null ? "Edit" : "Insert")%>
                 </button>
             </div>
         </div>
@@ -264,4 +264,17 @@
 <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
 <script src="js/scripts.js"></script> <!-- Custom scripts -->
 <script src="js/bootstrap.bundle.min.js"></script>
+<script>
+
+    btn = document.getElementById("button")
+    search = document.getElementById("search")
+    search.addEventListener('change', (event) => {
+        if (search.value !== "") {
+            btn.textContent = "Edit";
+        } else {
+            btn.textContent = "Insert";
+        }
+    });
+
+</script>
 </html>

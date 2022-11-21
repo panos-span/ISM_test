@@ -7,11 +7,13 @@ public class Customer {
     private final String id;
     private final String name;
     private final String surname;
+    private final String email;
 
-    public Customer(String id, String name, String surname) {
+    public Customer(String id, String name, String surname, String email) {
         this.id = id;
         this.name = name;
         this.surname = surname;
+        this.email = email;
     }
 
     @Override
@@ -23,7 +25,8 @@ public class Customer {
 
         if (!Objects.equals(id, customer.id)) return false;
         if (!Objects.equals(name, customer.name)) return false;
-        return Objects.equals(surname, customer.surname);
+        if (!Objects.equals(surname, customer.surname)) return false;
+        return Objects.equals(email, customer.email);
     }
 
     @Override
@@ -41,5 +44,9 @@ public class Customer {
 
     public String getSurname() {
         return surname;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

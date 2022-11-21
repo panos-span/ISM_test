@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class SaleServlet extends HttpServlet {
+
     private String getSearchId(String x) {
         String[] y = x.split("=");
         y[1] = y[1].substring(0, y[1].length() - 1);
@@ -40,7 +41,6 @@ public class SaleServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-
         doPost(request, response);
     }
 }

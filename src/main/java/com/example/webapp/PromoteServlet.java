@@ -24,17 +24,17 @@ public class PromoteServlet extends HttpServlet {
             rd.forward(request, response);
         }
 
-        PrintWriter out = new PrintWriter(response.getWriter(), true);
-        String client_number = request.getParameter("client_number");
-        String product_number = request.getParameter("product_number");
-        out.println(client_number);
-        out.println(product_number);
-        for (Customer customer : Promote.getCustomers()) {
-            out.println(customer.getId());
-        }
-        for (Product product : Promote.getProducts()) {
-            out.println(product.getId());
-        }
+        //PrintWriter out = new PrintWriter(response.getWriter(), true);
+        //String client_number = request.getParameter("client_number");
+        //String product_number = request.getParameter("product_number");
+        //out.println(client_number);
+        //out.println(product_number);
+        //for (Customer customer : Promote.getCustomers()) {
+        //    out.println(customer.getId());
+        //}
+        //for (Product product : Promote.getProducts()) {
+        //    out.println(product.getId());
+        //}
 
     }
 
@@ -79,10 +79,11 @@ public class PromoteServlet extends HttpServlet {
             params[2] = getSearchId(params[2]);
             CustomerDAO customerDAO = new CustomerDAO();
             ResultSet rs = customerDAO.searchCustomer(params[2]);
-            Customer customer = new Customer(params[2], params[0], params[1]);
             boolean exists;
+            Customer customer = null;
             try {
                 exists = rs.next();
+                customer = new Customer(params[2], params[0], params[1], rs.getString("Email"));
             } catch (Exception e) {
                 exists = false;
             }

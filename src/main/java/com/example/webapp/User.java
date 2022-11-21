@@ -11,7 +11,6 @@ public class User {
     private ResultSet rs = null;
     private final String selectUserQuery = "select Role from user where Username=? AND Password=?;";
 
-
     public User() {
         try {
             dbConnection.open();
