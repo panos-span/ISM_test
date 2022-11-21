@@ -251,7 +251,8 @@
         <br>
         <div class="container text-center">
             <div class="d-grid gap-2 col-6 mx-auto">
-                <button class="btn btn-primary btn-lg" type="submit" id="button"><%=(cust != null ? "Edit" : "Insert")%>
+                <button class="btn btn-primary btn-lg" type="submit"
+                        id="button"><%=(cust != null ? (!cust.equals("") ? "Edit" : "Insert") : "Insert")%>
                 </button>
             </div>
         </div>
