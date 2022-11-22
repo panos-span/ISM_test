@@ -19,7 +19,6 @@
 %>
 <jsp:forward page="login.jsp"/>
 <%
-        //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/login.jsp");
     }
 
     if (!role.equals("Salesman")) {
@@ -27,7 +26,6 @@
 <jsp:forward page="index.jsp"/>
 <%
     }
-    //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
 
 
 %>

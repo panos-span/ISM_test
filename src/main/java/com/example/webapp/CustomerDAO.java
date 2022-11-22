@@ -1,6 +1,5 @@
 package com.example.webapp;
 
-import java.security.SecureRandom;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +12,7 @@ public class CustomerDAO {
     private PreparedStatement stmt1 = null, stmt2 = null, stmt3 = null, stmt4 = null, stmt5 = null;
     private PreparedStatement search = null, searchPhones = null;
     private ResultSet rs = null;
-    private final String insertCustomerQuery = "insert into customer (ID, Name, Surname, VAT, Address, Email, Details) values (?,?,?,?,?,?,?);";
+    private final String insertCustomerQuery = "insert into customer (Name, Surname, VAT, Address, Email, Details) values (?,?,?,?,?,?);";
     private final String searchCustomerQuery = "select * FROM customer WHERE ID=?;";
     private final String searchCustomerPhonesQuery = "select Phone FROM customer_phones WHERE ID=?;";
     private final String insertCustomerPhonesQuery = "insert into customer_phones (ID,Phone) values (?,?);";
@@ -94,30 +93,13 @@ public class CustomerDAO {
 
         try {
             stmt1 = dbConnection.getCon().prepareStatement(insertCustomerQuery);
-
-            String id = String.valueOf(getRandomId());
-            int index = 1;
-
-            stmt1.setString(index, id);
-            /*for (String param : params) {
-                index++;
-                stmt1.setString(index, param);
-            }
-            // execute query
-            stmt1.executeUpdate();
-            stmt1.close();*/
+            int index = 0;
             enterCustInfo(stmt1, params, index);
-            enterCustPhonesInfo(stmt2, phones, id);
-            /*for (String phone : phones) {
-                if (phone != null) {
-                    stmt2 = dbConnection.getCon().prepareStatement(insertCustomerPhonesQuery);
-                    stmt2.setString(1, id);
-                    stmt2.setString(2, phone);
-                    stmt2.executeUpdate();
-                }
-            }
-            stmt2.close();*/
-
+            String customer_count = "SELECT COUNT(*) AS count FROM customer;";
+            stmt = dbConnection.getCon().createStatement();
+            rs = stmt.executeQuery(customer_count);
+            rs.next();
+            enterCustPhonesInfo(stmt2, phones, rs.getString("count"));
         } catch (Exception ignored) {
 
         }
@@ -140,11 +122,20 @@ public class CustomerDAO {
                 stmt.setString(1, id);
                 stmt.setString(2, phone);
                 stmt.executeUpdate();
+
             }
         }
         stmt.close();
+
     }
 
+    /**
+     * Issue when swapping phones
+     *
+     * @param params
+     * @param phones
+     * @param id
+     */
     public void editCustomer(String[] params, String[] phones, String id) {
         if (dbConnection.getCon() == null) {
             return;
@@ -157,22 +148,15 @@ public class CustomerDAO {
             int index = 0;
             stmt3.setString(7, id);
             enterCustInfo(stmt3, params, index);
+            stmt3.close();
             //Problems with keys
             stmt4 = dbConnection.getCon().prepareStatement(deleteCustomerPhonesQuery);
             stmt4.setString(1, id);
             stmt4.executeUpdate();
             stmt4.close();
-
             enterCustPhonesInfo(stmt5, phones, id);
-
-
         } catch (Exception ignored) {
         }
-    }
-
-    private int getRandomId() {
-        SecureRandom random = new SecureRandom();
-        return random.nextInt(90000) + 1;
     }
 
 
