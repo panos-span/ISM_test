@@ -8,12 +8,11 @@ CREATE TABLE User
     Phone    VARCHAR(10)  NOT NULL,
     Email    VARCHAR(255) NOT NULL,
     Role     VARCHAR(255) NOT NULL
-    /*CONSTRAINT US CHECK (Role = 1 OR Role = 2 )*/
 );
 
 CREATE TABLE Customer
 (
-    ID      INT          NOT NULL PRIMARY KEY,
+    ID      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Name    VARCHAR(255) NOT NULL,
     Surname VARCHAR(255) NOT NULL,
     VAT     VARCHAR(255),
@@ -27,13 +26,14 @@ CREATE TABLE Customer_Phones
     ID    INT NOT NULL REFERENCES Customer (ID)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    Phone VARCHAR(10),
+    Phone VARCHAR(10) NOT NULL,
+    POSITION INT NOT NULL,
     CONSTRAINT CP PRIMARY KEY (ID, Phone)
 );
 
 CREATE TABLE Product
 (
-    ID          INT          NOT NULL PRIMARY KEY,
+    ID          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Name        VARCHAR(255) NOT NULL,
     Price       FLOAT        NOT NULL,
     Category    VARCHAR(255),

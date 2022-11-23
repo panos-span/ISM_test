@@ -116,18 +116,17 @@
             rs1.close();
 
             ResultSet rs2 = customer.searchCustomerPhones(Id);
-            int index = 0;
             while (rs2.next()) {
-                phones[index] = rs2.getString("Phone");
-                index++;
+                phones[rs2.getInt("POSITION") - 1] = rs2.getString("Phone");
             }
+
             session.setAttribute("edit", Id);
             rs2.close();
         } else {
             session.setAttribute("edit", null);
             cust = null;
         }
-    }else {
+    } else {
         session.setAttribute("edit", null);
     }
 

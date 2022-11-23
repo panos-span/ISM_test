@@ -14,8 +14,8 @@ public class CustomerDAO {
     private ResultSet rs = null;
     private final String insertCustomerQuery = "insert into customer (Name, Surname, VAT, Address, Email, Details) values (?,?,?,?,?,?);";
     private final String searchCustomerQuery = "select * FROM customer WHERE ID=?;";
-    private final String searchCustomerPhonesQuery = "select Phone FROM customer_phones WHERE ID=?;";
-    private final String insertCustomerPhonesQuery = "insert into customer_phones (ID,Phone) values (?,?);";
+    private final String searchCustomerPhonesQuery = "select Phone,POSITION FROM customer_phones WHERE ID=?;";
+    private final String insertCustomerPhonesQuery = "insert into customer_phones (ID,Phone,POSITION) values (?,?,?);";
     private final String editCustomerQuery = "update customer set Name=?, Surname=?, VAT=?, Address=?, Email=?, Details=? WHERE (ID=?);";
     //private final String editCustomerPhonesQuery = "update customer_phones set Phone=? WHERE (ID=?);";
     private final String deleteCustomerPhonesQuery = "delete from customer_phones WHERE (ID=?);";
@@ -116,13 +116,15 @@ public class CustomerDAO {
     }
 
     private void enterCustPhonesInfo(PreparedStatement stmt, String[] phones, String id) throws SQLException {
+        int position = 1;
         for (String phone : phones) {
             if (!phone.equals("")) {
                 stmt = dbConnection.getCon().prepareStatement(insertCustomerPhonesQuery);
                 stmt.setString(1, id);
                 stmt.setString(2, phone);
+                stmt.setString(3, String.valueOf(position));
                 stmt.executeUpdate();
-
+                position++;
             }
         }
         stmt.close();

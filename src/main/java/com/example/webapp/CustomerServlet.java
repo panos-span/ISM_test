@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import jakarta.servlet.http.HttpSession;
+import java.io.PrintWriter;
 
 public class CustomerServlet extends HttpServlet {
 
@@ -44,15 +45,7 @@ public class CustomerServlet extends HttpServlet {
             customer.insertNewCustomer(params, phones);
             action = "Insert";
         }
-
         session.setAttribute("edit", null);
-        /*if (edit) {
-            customer.editCustomer(params,phones);
-            action="Edit";
-        } else {
-            customer.insertNewCustomer(params, phones);
-            action="Insert";
-        }*/
         customer.close();
 
         request.setAttribute("action", action);
