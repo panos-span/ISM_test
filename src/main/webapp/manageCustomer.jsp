@@ -93,35 +93,57 @@
     String[] phones = {"", ""};
     if (cust != null) {
         if (!cust.equals("")) {
-            String cust_id = getSearchId(cust);
+            String cust_id = null;
+            boolean f = true;
+            try {
+                cust_id = getSearchId(cust);
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+                f = false;
+%>
+                <jsp:include page="error_toast.jsp">
+                    <jsp:param name="error_message" value="Client not properly submitted"/>
+                </jsp:include>
+<%
+            }
             ResultSet rs1 = customer.searchCustomer(cust_id);
-            if (rs1 == null) {
-                throw new Exception("Client does not exist");
+            try {
+
+                if (rs1 == null) {
+                    throw new Exception("Client does not exist");
+                }
+                if (!rs1.next()) {
+                    throw new Exception("Client does not exist");
+                }
+
+                Name = rs1.getString("Name");
+                Surname = rs1.getString("Surname");
+                Vat = rs1.getString("VAT");
+                Id = rs1.getString("ID");
+                Address = rs1.getString("Address").split(", ", 2);
+                Email = rs1.getString("Email");
+                Details = rs1.getString("Details");
+
+                Details = check(Details);
+                Vat = check(Vat);
+
+                rs1.close();
+
+                ResultSet rs2 = customer.searchCustomerPhones(Id);
+                while (rs2.next()) {
+                    phones[rs2.getInt("POSITION") - 1] = rs2.getString("Phone");
+                }
+
+                session.setAttribute("edit", Id);
+                rs2.close();
+            } catch (Exception e) {
+                if (f) {
+%>
+<jsp:include page="error_toast.jsp">
+    <jsp:param name="error_message" value="<%=e.getMessage()%>"/>
+</jsp:include>
+<%
+                }
             }
-            if (!rs1.next()) {
-                throw new Exception("Client does not exist");
-            }
-
-            Name = rs1.getString("Name");
-            Surname = rs1.getString("Surname");
-            Vat = rs1.getString("VAT");
-            Id = rs1.getString("ID");
-            Address = rs1.getString("Address").split(", ", 2);
-            Email = rs1.getString("Email");
-            Details = rs1.getString("Details");
-
-            Details = check(Details);
-            Vat = check(Vat);
-
-            rs1.close();
-
-            ResultSet rs2 = customer.searchCustomerPhones(Id);
-            while (rs2.next()) {
-                phones[rs2.getInt("POSITION") - 1] = rs2.getString("Phone");
-            }
-
-            session.setAttribute("edit", Id);
-            rs2.close();
         } else {
             session.setAttribute("edit", null);
             cust = null;
