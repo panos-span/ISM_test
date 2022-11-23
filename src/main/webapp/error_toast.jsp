@@ -11,13 +11,14 @@
     <!-- Then put toasts within -->
     <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
-            <strong class="me-auto"> Client</strong>
+            <strong class="me-auto text-danger">Error</strong>
             <small><%=hour%>:<%=minutes%>
             </small>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-        <div class="toast-body text-black">
-            <%=request.getParameter("error_message")%>
+        <div class="toast-body text-danger">
+            <strong><%=request.getParameter("error_message")%>
+            </strong>
         </div>
     </div>
 </div>

@@ -26,8 +26,6 @@
 <jsp:forward page="index.jsp"/>
 <%
     }
-
-
 %>
 
 <jsp:include page="header.jsp">

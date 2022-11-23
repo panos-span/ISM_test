@@ -101,7 +101,7 @@
                 f = false;
 %>
                 <jsp:include page="error_toast.jsp">
-                    <jsp:param name="error_message" value="Client not properly submitted"/>
+                    <jsp:param name="error_message" value="Customer not properly submitted"/>
                 </jsp:include>
 <%
             }
@@ -109,10 +109,10 @@
             try {
 
                 if (rs1 == null) {
-                    throw new Exception("Client does not exist");
+                    throw new Exception("Customer does not exist");
                 }
                 if (!rs1.next()) {
-                    throw new Exception("Client does not exist");
+                    throw new Exception("Customer does not exist");
                 }
 
                 Name = rs1.getString("Name");
