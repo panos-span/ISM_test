@@ -86,7 +86,7 @@
 <%
 
     String cust = request.getParameter("customer");
-
+    boolean flag = false;
     CustomerDAO customer = new CustomerDAO();
     String Name = "", Surname = "", Id = "", Vat = "", Email = "", Details = "";
     String[] Address = {"", ""};
@@ -100,43 +100,44 @@
             } catch (ArrayIndexOutOfBoundsException ignored) {
                 f = false;
 %>
-                <jsp:include page="error_toast.jsp">
-                    <jsp:param name="error_message" value="Customer not properly submitted"/>
-                </jsp:include>
+<jsp:include page="error_toast.jsp">
+    <jsp:param name="error_message" value="Customer not properly submitted"/>
+</jsp:include>
 <%
-            }
-            ResultSet rs1 = customer.searchCustomer(cust_id);
-            try {
+    }
+    ResultSet rs1 = customer.searchCustomer(cust_id);
+    try {
 
-                if (rs1 == null) {
-                    throw new Exception("Customer does not exist");
-                }
-                if (!rs1.next()) {
-                    throw new Exception("Customer does not exist");
-                }
+        if (rs1 == null) {
+            throw new Exception("Customer does not exist");
+        }
+        if (!rs1.next()) {
+            throw new Exception("Customer does not exist");
+        }
+        flag = true;
+        Name = rs1.getString("Name");
+        Surname = rs1.getString("Surname");
+        Vat = rs1.getString("VAT");
+        Id = rs1.getString("ID");
+        Address = rs1.getString("Address").split(", ", 2);
+        Email = rs1.getString("Email");
+        Details = rs1.getString("Details");
 
-                Name = rs1.getString("Name");
-                Surname = rs1.getString("Surname");
-                Vat = rs1.getString("VAT");
-                Id = rs1.getString("ID");
-                Address = rs1.getString("Address").split(", ", 2);
-                Email = rs1.getString("Email");
-                Details = rs1.getString("Details");
+        Details = check(Details);
+        Vat = check(Vat);
 
-                Details = check(Details);
-                Vat = check(Vat);
+        rs1.close();
 
-                rs1.close();
+        ResultSet rs2 = customer.searchCustomerPhones(Id);
+        while (rs2.next()) {
+            phones[rs2.getInt("POSITION") - 1] = rs2.getString("Phone");
+        }
 
-                ResultSet rs2 = customer.searchCustomerPhones(Id);
-                while (rs2.next()) {
-                    phones[rs2.getInt("POSITION") - 1] = rs2.getString("Phone");
-                }
-
-                session.setAttribute("edit", Id);
-                rs2.close();
-            } catch (Exception e) {
-                if (f) {
+        session.setAttribute("edit", Id);
+        rs2.close();
+    } catch (Exception e) {
+        session.setAttribute("edit", null);
+        if (f) {
 %>
 <jsp:include page="error_toast.jsp">
     <jsp:param name="error_message" value="<%=e.getMessage()%>"/>
@@ -276,7 +277,7 @@
         <div class="container text-center">
             <div class="d-grid gap-2 col-6 mx-auto">
                 <button class="btn btn-primary btn-lg" type="submit"
-                        id="button"><%=(cust != null ? (!cust.equals("") ? "Edit" : "Insert") : "Insert")%>
+                        id="button"><%=(cust != null ? (flag ? "Edit" : "Insert") : "Insert")%>
                 </button>
             </div>
         </div>
@@ -286,21 +287,8 @@
 
 </body>
 <!-- Scripts -->
+<script src="js/changeButton.js"></script>
 <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
 <script src="js/scripts.js"></script> <!-- Custom scripts -->
 <script src="js/bootstrap.bundle.min.js"></script>
-<script>
-
-    btn = document.getElementById("button")
-    search = document.getElementById("search")
-    search.addEventListener('change', (event) => {
-        if (search.value !== "") {
-            btn.textContent = "Edit";
-        } else {
-            btn.textContent = "Insert";
-            window.location.href = 'manageCustomer.jsp';
-        }
-    });
-
-</script>
 </html>

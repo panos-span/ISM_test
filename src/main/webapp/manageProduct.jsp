@@ -76,6 +76,25 @@
     <jsp:param name="role" value="<%=role%>"/>
 </jsp:include>
 
+<%!
+    private String getSearchId(String x) {
+        String[] y = x.split("=");
+        y[1] = y[1].substring(0, y[1].length() - 1);
+        return y[1];
+    }
+
+    private String check(String x) {
+        if (x == null) {
+            return "";
+        }
+        return x;
+    }
+%>
+
+<%
+
+    String prod = request.getParameter("customer");
+%>
 
 <div class="container text-center" style="margin-top: 50px">
     <form role="search">
@@ -162,7 +181,9 @@
 
         <div class="row justify-content-center">
             <div class="d-grid gap-2 col-lg-8 mx-auto">
-                <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+                <button class="btn btn-primary btn-lg" type="submit"
+                        id="button"><%=(prod != null ? (!prod.equals("") ? "Edit" : "Insert") : "Insert")%>
+                </button>
             </div>
         </div>
 
@@ -172,6 +193,7 @@
 
 </body>
 <!-- Scripts -->
+<script src="js/changeButton.js"></script>
 <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
 <script src="js/scripts.js"></script> <!-- Custom scripts -->
 <script src="js/bootstrap.bundle.min.js"></script>
