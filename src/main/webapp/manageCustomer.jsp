@@ -1,7 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="com.example.webapp.CustomerDAO" %>
-<%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.webapp.Customer" %>
+<%@ page import="java.sql.ResultSet" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -166,21 +168,20 @@
                                value="<%= !Name.equals("") ? Name + " " + Surname + " (ID=" + Id + ")" : ""%>">
                         <datalist id="search_list">
                             <%
-                                ResultSet rs = customer.getAllCustomers();
-                                if (rs == null) {
+                                ArrayList<Customer> customers = customer.getAllCustomers();
+                                if (customers == null) {
                                     throw new Exception("Error");
                                 }
 
-                                while (rs.next()) {
-                                    String name = rs.getString("Name");
-                                    String surname = rs.getString("Surname");
-                                    String id = rs.getString("id");
+                                for (Customer cst : customers) {
+                                    String name = cst.getName();
+                                    String surname = cst.getSurname();
+                                    String id = cst.getId();
 
                             %>
                             <option value="<%=name + " " + surname + " (ID=" + id + ")"%>">
                                     <%
                                 }
-                                rs.close();
                                 customer.close();
 
                             %>

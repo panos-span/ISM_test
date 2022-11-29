@@ -53,4 +53,14 @@
         <servlet-name>PromoteServlet</servlet-name>
         <url-pattern>/PromoteServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <description/>
+        <display-name>HistoryServlet</display-name>
+        <servlet-name>HistoryServlet</servlet-name>
+        <servlet-class>com.example.webapp.HistoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HistoryServlet</servlet-name>
+        <url-pattern>/HistoryServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -1,9 +1,9 @@
 <%@ page import="com.example.webapp.CustomerDAO" %>
-<%@ page import="java.sql.ResultSet" %>
 <%@ page import="com.example.webapp.ProductDAO" %>
 <%@ page import="com.example.webapp.Customer" %>
 <%@ page import="com.example.webapp.Promote" %>
 <%@ page import="com.example.webapp.Product" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,14 +27,14 @@
 %>
 <jsp:forward page="login.jsp"/>
 <%
-        //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/login.jsp");
+
     }
 
     if (!role.equals("Salesman")) {
 %>
 <jsp:forward page="index.jsp"/>
 <%
-        //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
+
     }
 
 %>
@@ -46,32 +46,31 @@
 
 <!-- Search -->
 <div class="container text-center" style="margin-top: 100px">
-    <form role="search" action="PromoteServlet" type="POST">
+    <form role="search" action="PromoteServlet" type="POST" class="was-validated">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="input-group mb-3">
                     <div class="form-floating">
                         <input class="form-control" name="customer" list="search_customers_list" type="search"
                                id="search_customers"
-                               placeholder="Add Customer" aria-label="Search">
+                               placeholder="Add Customer" aria-label="Search" required>
                         <datalist id="search_customers_list">
                             <%
                                 CustomerDAO customer = new CustomerDAO();
-                                ResultSet rs = customer.getAllCustomers();
-                                if (rs == null) {
+                                ArrayList<Customer> customers = customer.getAllCustomers();
+                                if (customers == null) {
                                     throw new Exception("Error");
                                 }
 
-                                while (rs.next()) {
-                                    String name = rs.getString("Name");
-                                    String surname = rs.getString("Surname");
-                                    String id = rs.getString("id");
+                                for (Customer cst : customers) {
+                                    String name = cst.getName();
+                                    String surname = cst.getSurname();
+                                    String id = cst.getId();
 
                             %>
-                            <option value="<%=name + " " + surname + " (ID=" + id+")"%>">
+                            <option value="<%=name + " " + surname + " (ID=" + id + ")"%>">
                                     <%
                                 }
-                                rs.close();
                                 customer.close();
                             %>
                         </datalist>
@@ -83,30 +82,29 @@
             </div>
         </div>
     </form>
-    <form role="search" action="PromoteServlet" type="POST">
+    <form role="search" action="PromoteServlet" type="POST" class="was-validated">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="input-group mb-3">
                     <div class="form-floating">
                         <input class="form-control" list="search_products_list" name="product" type="search"
                                id="search_products"
-                               placeholder="Add Product" aria-label="Search">
+                               placeholder="Add Product" aria-label="Search" required>
                         <datalist id="search_products_list">
                             <%
                                 ProductDAO product = new ProductDAO();
-                                ResultSet rs1 = product.getAllProducts();
-                                if (rs1 == null) {
+                                ArrayList<Product> products = product.getAllProducts();
+                                if (products == null) {
                                     throw new Exception("Error");
                                 }
 
-                                while (rs1.next()) {
-                                    String name = rs1.getString("Name");
-                                    String id = rs1.getString("id");
+                                for (Product prd : products) {
+                                    String name = prd.getName();
+                                    String id = prd.getId();
                             %>
                             <option value="<%=name + " (ID=" + id+")"%>">
                                     <%
                                 }
-                                rs1.close();
                                 product.close();
                             %>
                         </datalist>

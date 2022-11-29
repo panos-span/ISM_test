@@ -1,7 +1,9 @@
 <%@ page import="com.example.webapp.CustomerDAO" %>
-<%@ page import="java.sql.ResultSet" %>
 <%@ page import="com.example.webapp.ProductDAO" %>
 <%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.webapp.Product" %>
+<%@ page import="com.example.webapp.Customer" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,21 +86,20 @@
                 <datalist id="customer_list">
                     <%
                         CustomerDAO customer = new CustomerDAO();
-                        ResultSet rs = customer.getAllCustomers();
-                        if (rs == null) {
+                        ArrayList<Customer> customers = customer.getAllCustomers();
+                        if (customers == null) {
                             throw new Exception("Error");
                         }
 
-                        while (rs.next()) {
-                            String name = rs.getString("Name");
-                            String surname = rs.getString("Surname");
-                            String id = rs.getString("id");
+                        for (Customer cust : customers) {
+                            String name = cust.getName();
+                            String surname = cust.getSurname();
+                            String id = cust.getId();
 
                     %>
                     <option value="<%=name + " " + surname + " (ID=" + id+")"%>">
                             <%
-                                }
-                                rs.close();
+                        }
                                 customer.close();
                             %>
                 </datalist>
@@ -115,20 +116,19 @@
                 <datalist id="products_list">
                     <%
                         ProductDAO product = new ProductDAO();
-                        ResultSet rs1 = product.getAllProducts();
-                        if (rs1 == null) {
+                        ArrayList<Product> products = product.getAllProducts();
+                        if (products == null) {
                             throw new Exception("Error");
                         }
 
-                        while (rs1.next()) {
-                            String name = rs1.getString("Name");
-                            String id = rs1.getString("id");
+                        for (Product prd : products) {
+                            String name = prd.getName();
+                            String id = prd.getId();
                     %>
                     <option value="<%=name + " (ID=" + id+")"%>">
                             <%
-                                }
-                                rs1.close();
-                                product.close();
+                        }
+                        product.close();
                             %>
                 </datalist>
             </div>

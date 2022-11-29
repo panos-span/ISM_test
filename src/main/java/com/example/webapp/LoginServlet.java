@@ -31,7 +31,6 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute("role", role);
         RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
-        //response.sendRedirect("http://localhost:8080/WebApp_war/index.jsp");
 
     }
 

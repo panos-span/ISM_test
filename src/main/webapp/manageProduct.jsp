@@ -1,6 +1,8 @@
 <%@ page import="com.example.webapp.ProductDAO" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.webapp.Product" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -107,19 +109,18 @@
                         <datalist id="search_list">
                             <%
                                 ProductDAO product = new ProductDAO();
-                                ResultSet rs = product.getAllProducts();
-                                if (rs == null) {
+                                ArrayList<Product> products = product.getAllProducts();
+                                if (products == null) {
                                     throw new Exception("Error");
                                 }
 
-                                while (rs.next()) {
-                                    String name = rs.getString("Name");
-                                    String id = rs.getString("id");
+                                for (Product prd : products) {
+                                    String name = prd.getName();
+                                    String id = prd.getId();
                             %>
                             <option value="<%=name + " (ID=" + id+")"%>">
                                     <%
                                 }
-                                rs.close();
                                 product.close();
                             %>
                         </datalist>

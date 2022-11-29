@@ -1,19 +1,29 @@
 package com.example.webapp;
 
 
-import java.util.HashSet;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Main {
 
-    public static void main(String[] args) {
-        Product product1 = new Product("1", "1", 2);
-        Product product2 = new Product("1", "1", 2);
-        HashSet<Product> products = new HashSet<>();
-        System.out.println(product2.equals(product1));
-        products.add(product1);
-        if (products.contains(product2))
-            products.add(product2);
-        System.out.println(products.size());
+    public static void main(String[] args) throws SQLException {
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.open();
+        String customer_count = "SELECT COUNT(*) AS count FROM customer;";
+        Statement stmt = dbConnection.getCon().createStatement();
+        ResultSet rs = stmt.executeQuery(customer_count);
+        rs.next();
+        System.out.println(rs.getString("count"));
+        try {
+            String selectAllCustomersQuery = "";
+            selectAllCustomersQuery = "select Name,Surname,ID from customer;";
+            stmt = dbConnection.getCon().createStatement();
+            rs = stmt.executeQuery(selectAllCustomersQuery);
+
+        } catch (Exception ignored) {
+
+        }
     }
 
     private static String getSearchId(String x) {

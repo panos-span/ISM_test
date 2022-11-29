@@ -1,5 +1,6 @@
 <%@ page import="com.example.webapp.CustomerDAO" %>
-<%@ page import="java.sql.ResultSet" %>
+<%@ page import="com.example.webapp.Customer" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,7 +48,7 @@
 
 <div class="container text-center">
     <!-- Search -->
-    <form action="" type="POST" class="was-validated"
+    <form action="HistoryServlet" type="POST" class="was-validated"
           onsubmit="return confirm('Do you really want to submit the form?');">
         <div class="row justify-content-center">
             <div class="col-lg-6">
@@ -58,21 +59,20 @@
                     <datalist id="search_list">
                         <%
                             CustomerDAO customer = new CustomerDAO();
-                            ResultSet rs = customer.getAllCustomers();
-                            if (rs == null) {
+                            ArrayList<Customer> customers = customer.getAllCustomers();
+                            if (customers == null) {
                                 throw new Exception("Error");
                             }
 
-                            while (rs.next()) {
-                                String name = rs.getString("Name");
-                                String surname = rs.getString("Surname");
-                                String id = rs.getString("id");
+                            for (Customer cst : customers) {
+                                String name = cst.getName();
+                                String surname = cst.getSurname();
+                                String id = cst.getId();
 
                         %>
-                        <option value="<%=name + " " + surname + " (ID=" + id +")"%>">
+                        <option value="<%=name + " " + surname + " (ID=" + id + ")"%>">
                                 <%
                                 }
-                                rs.close();
                                 customer.close();
                             %>
                     </datalist>
@@ -125,14 +125,12 @@
 
             <label>Start Date:
                 <input type="date" id="startdateId" name="startDate"
-                       value=""
                        min="" max="" class="form-control">
             </label>
 
 
             <label>End Date:
                 <input type="date" id="enddateId" name="endDate"
-                       value=""
                        min="" max="" class="form-control">
             </label>
 

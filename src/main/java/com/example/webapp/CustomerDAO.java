@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class CustomerDAO {
 
@@ -28,7 +29,7 @@ public class CustomerDAO {
         }
     }
 
-    public ResultSet getAllCustomers() {
+    public ArrayList<Customer> getAllCustomers() {
         try {
             if (dbConnection.getCon() == null) {
                 return null;
@@ -37,7 +38,15 @@ public class CustomerDAO {
             selectAllCustomersQuery = "select Name,Surname,ID from customer;";
             stmt = dbConnection.getCon().createStatement();
             rs = stmt.executeQuery(selectAllCustomersQuery);
-            return rs;
+            ArrayList<Customer> customers = new ArrayList<>();
+            while (rs.next()) {
+                String name = rs.getString("Name");
+                String surname = rs.getString("Surname");
+                String id = rs.getString("id");
+                customers.add(new Customer(id, name, surname, null));
+            }
+            rs.close();
+            return customers;
         } catch (Exception e5) {
             return null;
         }

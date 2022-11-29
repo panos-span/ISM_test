@@ -12,6 +12,10 @@ public class Sale {
     private final String insertSaleQuery = "insert into sale (Cust_id, Prod_id, Sale_Date, Quantity, Sale_Value) values (?,?,?,?,?);";
     private final String getCustomerSales = "select * from sale where Cust_id=?;";
 
+    private final String getCustomerSalesDates2 = "select * from sale where Cust_id=? and Sale_Date >=? and Sale_Date <=?;";
+    private final String getCustomerSalesDatesStart = "select * from sale where Cust_id=? and Sale_Date >=?;";
+    private final String getCustomerSalesDatesEnd = "select * from sale where Cust_id=? and Sale_Date <=?;";
+
 
     public Sale() {
         try {
@@ -51,11 +55,12 @@ public class Sale {
         }
     }
 
-    public ResultSet getAllCustomerSales(String cust_id) {
+    public ResultSet getAllCustomerSales(String cust_id, String startDate, String endDate) {
         if (dbConnection.getCon() == null) {
             return null;
         }
         try {
+            //different cases if start or end Date is null or both (3 cases)
             stmt = dbConnection.getCon().prepareStatement(getCustomerSales);
             stmt.setString(1, cust_id);
             rs = stmt.executeQuery();

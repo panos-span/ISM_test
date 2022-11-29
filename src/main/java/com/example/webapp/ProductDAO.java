@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class ProductDAO {
 
@@ -24,7 +25,7 @@ public class ProductDAO {
         }
     }
 
-    public ResultSet getAllProducts() {
+    public ArrayList<Product> getAllProducts() {
         try {
             if (dbConnection.getCon() == null) {
                 //errorMessages = "You must establish a connection first!";
@@ -34,10 +35,15 @@ public class ProductDAO {
             selectAllProductsQuery = "select Name,ID from product;";
             stmt = dbConnection.getCon().createStatement();
             rs = stmt.executeQuery(selectAllProductsQuery);
-            return rs;
+            ArrayList<Product> products = new ArrayList<>();
+            while (rs.next()) {
+                String name = rs.getString("Name");
+                String id = rs.getString("id");
+                products.add(new Product(id, name, 0));
+            }
+            rs.close();
+            return products;
         } catch (Exception e5) {
-            //errorMessages = "Error while getting all students from database!<br>"
-            //+ e5.getMessage();
             return null;
         }
     }
