@@ -63,4 +63,15 @@
         <servlet-name>HistoryServlet</servlet-name>
         <url-pattern>/HistoryServlet</url-pattern>
     </servlet-mapping>
+    <!-- error-code related error pages -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error404.jsp</location>
+    </error-page>
+
+    <!-- exception-type related error pages -->
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/appError.jsp</location>
+    </error-page>
 </web-app>
