@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class SaleServlet extends HttpServlet {
 
@@ -23,10 +25,50 @@ public class SaleServlet extends HttpServlet {
         for (int i = 0; i < 4; i++) {
             params[i] = request.getParameter(paramNames[i]);
         }
-        params[0] = getSearchId(params[0]);
-        params[1] = getSearchId(params[1]);
+        String error_message = null;
+        try {
+            params[0] = getSearchId(params[0]);
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+            error_message = "Customer not properly submitted";
+        }
+
+        try {
+            params[1] = getSearchId(params[1]);
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+            if (error_message != null) {
+                error_message = "Customer and Product not properly submitted";
+            } else {
+                error_message = "Product not properly submitted";
+            }
+        }
+
+        if (error_message != null) {
+            request.setAttribute("error", error_message);
+            redirect(request, response);
+            return;
+        }
+
         ProductDAO product = new ProductDAO();
         double price = product.getProductPrice(params[1]);
+        if (price == -1) {
+            error_message = "Product provided does not exist";
+            request.setAttribute("error", error_message);
+            redirect(request, response);
+            return;
+        }
+        CustomerDAO customerDAO = new CustomerDAO();
+        ResultSet rs = customerDAO.searchCustomer(params[0]);
+        try {
+            if (!rs.next()) {
+                error_message = "Client provided does not exist";
+                request.setAttribute("error", error_message);
+                redirect(request, response);
+                return;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         int quantity = Integer.parseInt(params[3]);
         double salevalue = price * quantity;
         params[4] = String.valueOf(salevalue);
@@ -35,9 +77,14 @@ public class SaleServlet extends HttpServlet {
         sale.insertNewSale(params);
         sale.close();
         request.setAttribute("action", "true");
+        redirect(request, response);
+    }
+
+    private void redirect(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher rd = request.getRequestDispatcher("/manageSale.jsp");
         rd.forward(request, response);
     }
+
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {

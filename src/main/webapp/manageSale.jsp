@@ -75,6 +75,17 @@
 <br>
 <br>
 
+<%
+    if (request.getAttribute("error") != null) {
+        String error_message = (String) request.getAttribute("error");
+%>
+<jsp:include page="error_toast.jsp">
+    <jsp:param name="error_message" value="<%=error_message%>"/>
+</jsp:include>
+<%
+    }
+%>
+
 <form class="container text-center was-validated" action="SaleServlet"
       onsubmit="return confirm('Do you really want to submit the form?');">
     <div class="row justify-content-center">
