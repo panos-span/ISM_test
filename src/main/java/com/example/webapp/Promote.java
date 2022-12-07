@@ -3,7 +3,6 @@ package com.example.webapp;
 import java.util.ArrayList;
 
 
-
 public class Promote {
 
     private static final ArrayList<Customer> customers = new ArrayList<>();
@@ -31,5 +30,10 @@ public class Promote {
 
     public static ArrayList<Product> getProducts() {
         return products;
+    }
+
+    public static void clearLists() {
+        customers.clear();
+        products.clear();
     }
 }
