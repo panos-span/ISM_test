@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class PromoteServlet extends HttpServlet {
 
@@ -22,6 +23,20 @@ public class PromoteServlet extends HttpServlet {
         if (redirect) {
             RequestDispatcher rd = request.getRequestDispatcher("/promote.jsp");
             rd.forward(request, response);
+            return;
+        }
+        ArrayList<Customer> cust;
+        cust=Promote.getCustomers();
+        ArrayList<Product>prod;
+        prod=Promote.getProducts();
+        String message =GenerateEmailMessage(prod);
+        String subject="Promotion just for you!!!!";
+        String user="pramataritest@gmail.com";
+        String pass="zffocnenjhioytwd";
+        String mail;
+        for(Customer customer : cust){
+            mail=customer.getEmail();
+            SendMail.send(mail,subject,message,user,pass);
         }
 
         //PrintWriter out = new PrintWriter(response.getWriter(), true);
@@ -35,13 +50,24 @@ public class PromoteServlet extends HttpServlet {
         //for (Product product : Promote.getProducts()) {
         //    out.println(product.getId());
         //}
-
+        Promote.clearLists();
+        RequestDispatcher rd = request.getRequestDispatcher("/promote.jsp");
+        rd.forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         doPost(request, response);
     }
+
+    private String GenerateEmailMessage(ArrayList<Product> products){
+        String message="Here is the list of the products and their id's,that we think you'd like:\n";
+        for (Product prod:products){
+            message=message + prod.getName()+","+prod.getId()+"\n";
+        }
+        return message;
+    }
+
 
     private String getSearchId(String x) {
         String[] y = x.split("=");
