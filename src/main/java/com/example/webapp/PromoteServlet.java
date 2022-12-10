@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -25,31 +24,20 @@ public class PromoteServlet extends HttpServlet {
             rd.forward(request, response);
             return;
         }
-        ArrayList<Customer> cust;
-        cust=Promote.getCustomers();
-        ArrayList<Product>prod;
-        prod=Promote.getProducts();
-        String message =GenerateEmailMessage(prod);
-        String subject="Promotion just for you!!!!";
-        String user="pramataritest@gmail.com";
-        String pass="zffocnenjhioytwd";
-        String mail;
-        for(Customer customer : cust){
-            mail=customer.getEmail();
-            SendMail.send(mail,subject,message,user,pass);
+        ArrayList<Customer> cust = Promote.getCustomers();
+        ArrayList<Product> prod = Promote.getProducts();
+        String message = GenerateEmailMessage(prod);
+        //String message = "Gion";
+        String subject = "Promotion just for you!!!!";
+        String user = "pramataritest@gmail.com";
+        String pass = "zffocnenjhioytwd";
+        String host = "smtp.gmail.com";
+        String port = "465";
+        for (Customer customer : cust) {
+            String mail = customer.getEmail();
+            SendMail.send(user, host, port, mail, subject, message);
         }
 
-        //PrintWriter out = new PrintWriter(response.getWriter(), true);
-        //String client_number = request.getParameter("client_number");
-        //String product_number = request.getParameter("product_number");
-        //out.println(client_number);
-        //out.println(product_number);
-        //for (Customer customer : Promote.getCustomers()) {
-        //    out.println(customer.getId());
-        //}
-        //for (Product product : Promote.getProducts()) {
-        //    out.println(product.getId());
-        //}
         Promote.clearLists();
         RequestDispatcher rd = request.getRequestDispatcher("/promote.jsp");
         rd.forward(request, response);
@@ -60,10 +48,10 @@ public class PromoteServlet extends HttpServlet {
         doPost(request, response);
     }
 
-    private String GenerateEmailMessage(ArrayList<Product> products){
-        String message="Here is the list of the products and their id's,that we think you'd like:\n";
-        for (Product prod:products){
-            message=message + prod.getName()+","+prod.getId()+"\n";
+    private String GenerateEmailMessage(ArrayList<Product> products) {
+        String message = "Here is the list of the products and their id's,that we think you'd like:\n";
+        for (Product prod : products) {
+            message = message + prod.getName() + "," + prod.getId() + "\n";
         }
         return message;
     }

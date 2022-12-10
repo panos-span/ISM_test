@@ -91,7 +91,7 @@
                 <div class="col-6">
                     <div class="table-responsive-md">
                         <table class="table bg-white caption-top">
-                            <caption class="bg-white text-center"><h4>Jacob Thornton</h4></caption>
+                            <caption class="bg-white text-center"><h4><%= request.getAttribute("customer") == null ? "" : request.getAttribute("cust_name") +" "+  request.getAttribute("cust_surname")%></h4></caption>
                             <thead>
                             <tr>
                                 <th scope="col">Product</th>

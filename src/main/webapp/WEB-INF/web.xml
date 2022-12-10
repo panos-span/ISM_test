@@ -45,6 +45,16 @@
     </servlet-mapping>
     <servlet>
         <description/>
+        <display-name>ProductServlet</display-name>
+        <servlet-name>ProductServlet</servlet-name>
+        <servlet-class>com.example.webapp.ProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductServlet</servlet-name>
+        <url-pattern>/ProductServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <description/>
         <display-name>PromoteServlet</display-name>
         <servlet-name>PromoteServlet</servlet-name>
         <servlet-class>com.example.webapp.PromoteServlet</servlet-class>

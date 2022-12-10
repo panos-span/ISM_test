@@ -12,6 +12,7 @@ public class ProductDAO {
 
     private PreparedStatement productprice = null;
     private final String getProductPrice = "select Price from product where ID=?;";
+    private PreparedStatement search = null, stmt1 = null;
     private final String searchProduct = ";";
 
     private Statement stmt = null;
@@ -49,8 +50,18 @@ public class ProductDAO {
     }
 
     public ResultSet searchProduct(String id) {
-
-        return null;
+        try {
+            if (dbConnection.getCon() == null) {
+                return null;
+            }
+            String searchQuery = "select * from product where ID=?";
+            search = dbConnection.getCon().prepareStatement(searchQuery);
+            search.setString(1, id);
+            rs = search.executeQuery();
+            return rs;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public double getProductPrice(String ID) {
@@ -80,5 +91,45 @@ public class ProductDAO {
             throw new RuntimeException(e);
         }
     }
+    public void insertNewProduct(String[] params) {
+        if (dbConnection.getCon() == null) {
+            return;
+            //throw new SQLException(errorMessages); String id,String name,String description, String price
+        }
 
+        try {
+            String insertQuery = "insert into product (Name, Price, Category, Description) values (?,?,?,?);";
+            stmt1 = dbConnection.getCon().prepareStatement(insertQuery);
+            stmt1.setString(1, params[0]);
+            stmt1.setDouble(2, Double.parseDouble(params[1]));
+            stmt1.setString(3, params[2]);
+            stmt1.setString(4, params[3]);
+            stmt1.executeUpdate();
+            stmt1.close();
+        } catch (Exception e) {
+            //this is an exception
+        }
+    }
+
+    public void editProduct(String[] params, String id) {
+        if (dbConnection.getCon() == null) {
+            return;
+            //throw new SQLException(errorMessages); String id,String name,String surname,String vat,String address,String email,String details
+        }
+
+        try {
+            String editQuery = "update product set Name=?, Price=?, Category=?, Description=? WHERE (ID=?);";
+            stmt1 = dbConnection.getCon().prepareStatement(editQuery);
+            stmt1.setInt(5, Integer.parseInt(id));
+            stmt1.setString(1, params[0]);
+            stmt1.setDouble(2, Double.parseDouble(params[1]));
+            stmt1.setString(3, params[2]);
+            stmt1.setString(4, params[3]);
+            stmt1.executeUpdate();
+            stmt1.close();
+        } catch (Exception e) {
+            //this is an exception
+        }
+    }
 }
+

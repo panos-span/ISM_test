@@ -164,7 +164,8 @@
                 <div class="input-group mb-3">
                     <div class="form-floating">
                         <input class="form-control" list="search_list" name="customer" type="search" id="search"
-                               placeholder="Search Existing Customer" aria-label="Search"
+                               placeholder="Search Existing Customer"
+                               aria-label="Search"
                                value="<%= !Name.equals("") ? Name + " " + Surname + " (ID=" + Id + ")" : ""%>">
                         <datalist id="search_list">
                             <%

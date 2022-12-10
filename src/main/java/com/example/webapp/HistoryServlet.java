@@ -24,6 +24,8 @@ public class HistoryServlet extends HttpServlet {
         String x = request.getParameter(paramNames[1]);
         if (Objects.equals(x, ""))
             out.println("yes");
+        //ResultSet rs = getCustomerSales();
+        //request.setAttribute("customer",rs);
 
     }
 

@@ -11,7 +11,6 @@ public class Sale {
     private ResultSet rs = null;
     private final String insertSaleQuery = "insert into sale (Cust_id, Prod_id, Sale_Date, Quantity, Sale_Value) values (?,?,?,?,?);";
     private final String getCustomerSales = "select * from sale where Cust_id=?;";
-
     private final String getCustomerSalesDates2 = "select * from sale where Cust_id=? and Sale_Date >=? and Sale_Date <=?;";
     private final String getCustomerSalesDatesStart = "select * from sale where Cust_id=? and Sale_Date >=?;";
     private final String getCustomerSalesDatesEnd = "select * from sale where Cust_id=? and Sale_Date <=?;";
