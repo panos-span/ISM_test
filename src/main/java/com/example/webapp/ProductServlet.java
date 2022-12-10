@@ -16,7 +16,7 @@ public class ProductServlet extends HttpServlet {
         String[] paramNames = {"name", "price", "category", "description"};
         String[] params = new String[4];
 
-        for (int i = 0; i <= paramNames.length; i++) {
+        for (int i = 0; i < paramNames.length; i++) {
             params[i] = request.getParameter(paramNames[i]);
         }
 

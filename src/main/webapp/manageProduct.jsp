@@ -170,9 +170,9 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="form-floating">
-                <textarea class="form-control" placeholder="Description" name="details" id="floatingTextarea2"
+                <textarea class="form-control" placeholder="description" name="description" id="description"
                           style="height: 100px"></textarea>
-                    <label for="floatingTextarea2" style="color: black;">Details</label>
+                    <label for="description" style="color: black;">Details</label>
                 </div>
             </div>
         </div>
