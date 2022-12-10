@@ -20,6 +20,5 @@ public class LogoutServlet extends HttpServlet {
         doPost(request, response);
         RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
-        //response.sendRedirect("http://localhost:8080/WebApp_war/login.jsp");
     }
 }

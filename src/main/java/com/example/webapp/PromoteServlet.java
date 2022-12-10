@@ -7,10 +7,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class PromoteServlet extends HttpServlet {
 
+    private final String subject = "Promotion just for you!!!!";
+    private final String host = "smtp.gmail.com";
+    private final String port = "465";
+    private final String user = "pramataritest@gmail.com";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
@@ -24,21 +29,28 @@ public class PromoteServlet extends HttpServlet {
             rd.forward(request, response);
             return;
         }
+
         ArrayList<Customer> cust = Promote.getCustomers();
         ArrayList<Product> prod = Promote.getProducts();
-        String message = GenerateEmailMessage(prod);
-        //String message = "Gion";
-        String subject = "Promotion just for you!!!!";
-        String user = "pramataritest@gmail.com";
-        String pass = "zffocnenjhioytwd";
-        String host = "smtp.gmail.com";
-        String port = "465";
-        for (Customer customer : cust) {
-            String mail = customer.getEmail();
-            SendMail.send(user, host, port, mail, subject, message);
+        String x = null;
+        if (cust.size() == 0) {
+            x = "customers";
+        } else if (prod.size() == 0) {
+            x = "products";
         }
 
+        if (x != null) {
+            String error_message = String.format("You must enter %s for promotion", x);
+            request.setAttribute("error", error_message);
+            RequestDispatcher rd = request.getRequestDispatcher("/promote.jsp");
+            rd.forward(request, response);
+            return;
+        }
+
+        final String message = GenerateEmailMessage(prod);
+        SendMail.send(user, host, port, cust, subject, message);
         Promote.clearLists();
+        request.setAttribute("action", "Promotion");
         RequestDispatcher rd = request.getRequestDispatcher("/promote.jsp");
         rd.forward(request, response);
     }
@@ -51,7 +63,7 @@ public class PromoteServlet extends HttpServlet {
     private String GenerateEmailMessage(ArrayList<Product> products) {
         String message = "Here is the list of the products and their id's,that we think you'd like:\n";
         for (Product prod : products) {
-            message = message + prod.getName() + "," + prod.getId() + "\n";
+            message = message + prod.getName() + ", " + prod.getId() + "\n";
         }
         return message;
     }
@@ -90,7 +102,12 @@ public class PromoteServlet extends HttpServlet {
         boolean f = false;
         if (cust != null) {
             String[] params = cust.split(" ");
-            params[2] = getSearchId(params[2]);
+            try {
+                params[2] = getSearchId(params[2]);
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+                return true;
+            }
+            //params[2] = getSearchId(params[2]);
             CustomerDAO customerDAO = new CustomerDAO();
             ResultSet rs = customerDAO.searchCustomer(params[2]);
             boolean exists;
@@ -115,7 +132,7 @@ public class PromoteServlet extends HttpServlet {
     }
 
     /**
-     * !Note: while checking if product/customer exists, you can get name and other useful elements
+     * Note: while checking if product/customer exists, you can get name and other useful elements
      *
      * @param request
      * @return
@@ -125,23 +142,28 @@ public class PromoteServlet extends HttpServlet {
         boolean f = false;
         if (prod != null) {
             String[] params = prod.split(" ");
-            params[params.length - 1] = getSearchId(params[params.length - 1]);
-            ProductDAO productDAO = new ProductDAO();
-            double price = productDAO.getProductPrice(params[params.length - 1]);
-            String name = "";
-            for (int i = 0; i < params.length - 1; i++) {
-                name += params[i] + " ";
+            try {
+                params[params.length - 1] = getSearchId(params[params.length - 1]);
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+                return true;
             }
+            ProductDAO productDAO = new ProductDAO();
             ResultSet rs = productDAO.searchProduct(params[params.length - 1]);
-            /*try {
+            Product product;
+            try {
                 if (rs.next()) {
-                    Product product = new Product(rs.getString("ID"), rs.getString("Name"), rs.getDouble("Price"));
+                    product = new Product(rs.getString("ID"), rs.getString("Name"), rs.getDouble("Price"));
+                } else {
+                    return true;
                 }
                 rs.close();
             } catch (Exception e) {
-                return false;
-            }*/
-            Product product = new Product(params[params.length - 1], name, price);
+                try {
+                    rs.close();
+                } catch (SQLException ignored) {
+                }
+                return true;
+            }
             if (!Promote.getProducts().contains(product)) {
                 Promote.addProduct(product);
             }

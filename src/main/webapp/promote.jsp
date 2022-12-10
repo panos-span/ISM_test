@@ -4,6 +4,7 @@
 <%@ page import="com.example.webapp.Promote" %>
 <%@ page import="com.example.webapp.Product" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.time.LocalDateTime" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,12 +38,53 @@
 
     }
 
+    String action = (String) request.getAttribute("action");
+
+    if (action == null) {
+        action = "";
+    }
+
+    boolean f1 = !action.equals("");
+    int hour = LocalDateTime.now().getHour();
+    int minutes = LocalDateTime.now().getMinute();
+    if (f1) {
 %>
+<!-- Flexbox container for aligning the toasts -->
+<div aria-live="polite" aria-atomic="true" class="toast-container bottom-0 end-0">
+
+    <!-- Then put toasts within -->
+    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto"><%=action%></strong>
+            <small><%=hour%>:<%=minutes%>
+            </small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body text-black">
+            <%=action%> was successful
+        </div>
+    </div>
+</div>
+
+<%
+    }
+%>
+
 
 <jsp:include page="header.jsp">
     <jsp:param name="role" value="<%=role%>"/>
 </jsp:include>
 
+<%
+    if (request.getAttribute("error") != null) {
+        String error_message = (String) request.getAttribute("error");
+%>
+<jsp:include page="error_toast.jsp">
+    <jsp:param name="error_message" value="<%=error_message%>"/>
+</jsp:include>
+<%
+    }
+%>
 
 <!-- Search -->
 <div class="container text-center" style="margin-top: 100px">
@@ -95,7 +137,7 @@
                                 ProductDAO product = new ProductDAO();
                                 ArrayList<Product> products = product.getAllProducts();
                                 if (products == null) {
-                                    throw new Exception("Error");
+                                    throw new Exception("Error, no products exist");
                                 }
 
                                 for (Product prd : products) {
