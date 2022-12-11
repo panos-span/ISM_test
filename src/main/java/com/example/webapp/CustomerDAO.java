@@ -141,7 +141,7 @@ public class CustomerDAO {
     }
 
     /**
-     * Issue when swapping phones
+     *
      *
      * @param params
      * @param phones
@@ -150,7 +150,7 @@ public class CustomerDAO {
     public void editCustomer(String[] params, String[] phones, String id) {
         if (dbConnection.getCon() == null) {
             return;
-            //throw new SQLException(errorMessages); String id,String name,String surname,String vat,String address,String email,String details
+            //throw new SQLException(errorMessages);
         }
 
         try {

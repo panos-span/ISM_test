@@ -171,7 +171,7 @@
                             <%
                                 ArrayList<Customer> customers = customer.getAllCustomers();
                                 if (customers == null) {
-                                    throw new Exception("Error");
+                                    throw new Exception("Error, no customers exist");
                                 }
 
                                 for (Customer cst : customers) {
@@ -289,7 +289,18 @@
 
 </body>
 <!-- Scripts -->
-<script src="js/changeButton.js"></script>
+<script>
+
+    btn = document.getElementById("button")
+    search = document.getElementById("search")
+    search.addEventListener('change', (event) => {
+        if (search.value !== "") {
+        } else {
+            window.location.href = 'manageCustomer.jsp';
+        }
+    });
+
+</script>
 <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
 <script src="js/scripts.js"></script> <!-- Custom scripts -->
 <script src="js/bootstrap.bundle.min.js"></script>

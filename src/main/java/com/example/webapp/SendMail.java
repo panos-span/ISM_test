@@ -1,14 +1,19 @@
 package com.example.webapp;
 
 import java.util.ArrayList;
-import javax.mail.*;
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.util.Properties;
 
 public class SendMail {
 
-    public static void send(String from, String host, String port, ArrayList<Customer> customers /*String to*/, String subject, String text) {
+    public static void send(String from, String host, String port, ArrayList<Customer> customers, String subject, String text) {
 
         Properties props = new Properties();
 
@@ -36,7 +41,16 @@ public class SendMail {
             for (Customer cust : customers) {
                 msg.addRecipient(Message.RecipientType.TO, new InternetAddress(cust.getEmail()));
             }
-            Transport.send(msg);
+            //Runs in background (κερδίζει περίπου 10 sec)
+            Thread send = new Thread(() -> {
+                try {
+                    Transport.send(msg);
+                } catch (MessagingException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            send.start();
+            //Transport.send(msg);
         } catch (Exception mex) {
             mex.printStackTrace();
         }

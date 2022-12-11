@@ -99,7 +99,7 @@
                         CustomerDAO customer = new CustomerDAO();
                         ArrayList<Customer> customers = customer.getAllCustomers();
                         if (customers == null) {
-                            throw new Exception("Error");
+                            throw new Exception("Error, no customers exist");
                         }
 
                         for (Customer cust : customers) {
@@ -129,7 +129,7 @@
                         ProductDAO product = new ProductDAO();
                         ArrayList<Product> products = product.getAllProducts();
                         if (products == null) {
-                            throw new Exception("Error");
+                            throw new Exception("Error, no products exist");
                         }
 
                         for (Product prd : products) {

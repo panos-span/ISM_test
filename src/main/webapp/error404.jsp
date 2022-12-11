@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html>
@@ -26,10 +26,10 @@
 
 
 <div class="container text-center" style="margin-top: 100px">
-    <h4>Oops something went wrong</h4>
+    <h3>Oops something went wrong</h3>
     <hr>
-        <h4 class="card-title">Description:</h4>
-        <p><code>Page not found!</code></p>
+    <h4 class="card-title">Description:</h4>
+    <h5><code>Page not found!</code></h5>
 
 </div>
 

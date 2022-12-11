@@ -46,7 +46,6 @@ public class PromoteServlet extends HttpServlet {
             rd.forward(request, response);
             return;
         }
-
         final String message = GenerateEmailMessage(prod);
         SendMail.send(user, host, port, cust, subject, message);
         Promote.clearLists();
@@ -61,9 +60,9 @@ public class PromoteServlet extends HttpServlet {
     }
 
     private String GenerateEmailMessage(ArrayList<Product> products) {
-        String message = "Here is the list of the products and their id's,that we think you'd like:\n";
+        String message = "Here is the list of the products and their prices,that we think you'd like:\n";
         for (Product prod : products) {
-            message = message + prod.getName() + ", " + prod.getId() + "\n";
+            message += prod.getName() + ", " + prod.getPrice() + "€" + "\n";
         }
         return message;
     }

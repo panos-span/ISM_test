@@ -36,8 +36,6 @@
 <jsp:forward page="index.jsp"/>
 <%
     }
-
-
     String action = (String) request.getAttribute("action");
 
     if (action == null) {
@@ -56,7 +54,7 @@
     <!-- Then put toasts within -->
     <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
-            <strong class="me-auto"><%=action%> Client</strong>
+            <strong class="me-auto"><%=action%> Product</strong>
             <small><%=hour%>:<%=minutes%>
             </small>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -109,7 +107,7 @@
                                 ProductDAO product = new ProductDAO();
                                 ArrayList<Product> products = product.getAllProducts();
                                 if (products == null) {
-                                    throw new Exception("Error");
+                                    throw new Exception("Error, no products exist");
                                 }
 
                                 for (Product prd : products) {
@@ -138,7 +136,7 @@
             <div class="col-lg-8">
                 <div class="form-floating">
                     <input type="text" class="form-control" name="name" id="floatingInputGrid1" placeholder="Name"
-                           value="ex: ABCDEFG " required>
+                           value="" required>
                     <label for="floatingInputGrid1" class="text-black">Name</label>
                 </div>
             </div>
@@ -161,7 +159,7 @@
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInputGrid3" name="category"
                            placeholder="Category"
-                           value="ex: Clothing">
+                           value="">
                     <label for="floatingInputGrid3" class="text-black">Category</label>
                 </div>
             </div>
@@ -192,7 +190,18 @@
 
 </body>
 <!-- Scripts -->
-<script src="js/changeButton.js"></script>
+<script>
+
+    btn = document.getElementById("button")
+    search = document.getElementById("search")
+    search.addEventListener('change', (event) => {
+        if (search.value !== "") {
+        } else {
+            window.location.href = 'manageProduct.jsp';
+        }
+    });
+
+</script>
 <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
 <script src="js/scripts.js"></script> <!-- Custom scripts -->
 <script src="js/bootstrap.bundle.min.js"></script>

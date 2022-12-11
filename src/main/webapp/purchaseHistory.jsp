@@ -24,7 +24,6 @@
 %>
 <jsp:forward page="login.jsp"/>
 <%
-        //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/login.jsp");
     }
 
     if (!role.equals("Salesman")) {
@@ -32,7 +31,6 @@
 <jsp:forward page="index.jsp"/>
 <%
     }
-    //response.sendRedirect("http://localhost:8080/WebApp_war_exploded/index.jsp");
 
 
 %>
@@ -61,7 +59,7 @@
                             CustomerDAO customer = new CustomerDAO();
                             ArrayList<Customer> customers = customer.getAllCustomers();
                             if (customers == null) {
-                                throw new Exception("Error");
+                                throw new Exception("Error, no customers exist");
                             }
 
                             for (Customer cst : customers) {
@@ -89,9 +87,11 @@
 
             <div class="row justify-content-center">
                 <div class="col-6">
-                    <div class="table-responsive-md">
+                    <div class="table-responsive-md" style="height:275px;overflow:auto;">
                         <table class="table bg-white caption-top">
-                            <caption class="bg-white text-center"><h4><%= request.getAttribute("customer") == null ? "" : request.getAttribute("cust_name") +" "+  request.getAttribute("cust_surname")%></h4></caption>
+                            <caption class="bg-white text-center">
+                                <h4><%= request.getAttribute("customer") == null ? "" : request.getAttribute("cust_name") + " " + request.getAttribute("cust_surname")%>
+                                </h4></caption>
                             <thead>
                             <tr>
                                 <th scope="col">Product</th>
@@ -101,7 +101,6 @@
                             </thead>
                             <tbody>
                             <tr>
-
                                 <td>093</td>
                                 <td>250 <i class="bi bi-currency-euro"></i></td>
                                 <td>1</td>
@@ -137,6 +136,7 @@
             <br>
             <br>
 
+            <%--Write queries for sum and average in Sale --%>
             <label for="sum" class="form-label">Total: 360<i class="bi bi-currency-euro"></i></label>
             <br>
             <label for="average" class="form-label">Average: 120<i class="bi bi-currency-euro"></i></label>

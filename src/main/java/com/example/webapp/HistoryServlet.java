@@ -1,12 +1,11 @@
 package com.example.webapp;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Objects;
 
 public class HistoryServlet extends HttpServlet {
 
@@ -20,10 +19,12 @@ public class HistoryServlet extends HttpServlet {
             throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
         String[] paramNames = {"customer", "startDate", "endDate"};
-        PrintWriter out = new PrintWriter(response.getWriter(), true);
+        //PrintWriter out = new PrintWriter(response.getWriter(), true);
         String x = request.getParameter(paramNames[1]);
-        if (Objects.equals(x, ""))
-            out.println("yes");
+        //if (Objects.equals(x, ""))
+            //out.println("yes");
+        RequestDispatcher rd = request.getRequestDispatcher("/purchaseHistory.jsp");
+        rd.forward(request, response);
         //ResultSet rs = getCustomerSales();
         //request.setAttribute("customer",rs);
 

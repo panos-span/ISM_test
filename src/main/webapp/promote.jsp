@@ -169,7 +169,7 @@
         <!-- Tables-->
         <div class="row justify-content-evenly">
             <div class="col-5">
-                <div class="table-responsive-md">
+                <div class="table-responsive-md" style="height:275px;overflow:auto;">
                     <table class="table bg-white caption-top" id="client_table">
                         <caption class="bg-white text-center"><h4>List of Clients </h4></caption>
                         <thead>
@@ -207,7 +207,7 @@
             </div>
 
             <div class="col-5">
-                <div class="table-responsive-md">
+                <div class="table-responsive-md" style="height:275px;overflow:auto;">
                     <table class="table bg-white caption-top" id="product_table">
                         <caption class="bg-white text-center"><h4>List of Products </h4></caption>
                         <thead>
@@ -247,7 +247,7 @@
         <br>
 
         <div class="d-grid gap-2 col-8 mx-auto">
-            <button class="btn btn-primary" type="submit"
+            <button class="btn btn-primary btn-lg" type="submit"
                     onclick="return confirm('Do you really want to submit the form?');">Submit
             </button>
         </div>

@@ -9,12 +9,9 @@ import java.util.ArrayList;
 public class ProductDAO {
 
     private final DBConnection dbConnection = new DBConnection();
-
     private PreparedStatement productprice = null;
     private final String getProductPrice = "select Price from product where ID=?;";
     private PreparedStatement search = null, stmt1 = null;
-    private final String searchProduct = ";";
-
     private Statement stmt = null;
     private ResultSet rs = null;
 
@@ -127,8 +124,8 @@ public class ProductDAO {
             stmt1.setString(4, params[3]);
             stmt1.executeUpdate();
             stmt1.close();
-        } catch (Exception e) {
-            //this is an exception
+        } catch (Exception ignored) {
+
         }
     }
 }
