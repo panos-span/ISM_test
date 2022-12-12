@@ -2,6 +2,7 @@
 <%@ page import="com.example.webapp.Customer" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,14 +85,20 @@
         <br>
         <!-- Table -->
         <div class="container text-center">
-
+            <%
+                double total = 0;
+                int totalquantities = 0;
+                double averageprice = 0;
+            %>
             <div class="row justify-content-center">
                 <div class="col-6">
                     <div class="table-responsive-md" style="height:275px;overflow:auto;">
                         <table class="table bg-white caption-top">
+
                             <caption class="bg-white text-center">
-                                <h4><%= request.getAttribute("customer") == null ? "" : request.getAttribute("cust_name") + " " + request.getAttribute("cust_surname")%>
-                                </h4></caption>
+                                <h4><%= request.getAttribute("customerSale") == null ? " " : request.getAttribute("cust_name") +" " + request.getAttribute("cust_surname") %></h4>
+                            </caption>
+
                             <thead>
                             <tr>
                                 <th scope="col">Product</th>
@@ -100,21 +107,27 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <%
+                            if (request.getAttribute("customerSale") != null){
+                                ArrayList<String> customer_sales = (ArrayList<String>) request.getAttribute("SalesArraylist");
+                                int count = 0;
+                                while ((count+3) <= customer_sales.size()){
+                            %>
                             <tr>
-                                <td>093</td>
-                                <td>250 <i class="bi bi-currency-euro"></i></td>
-                                <td>1</td>
+                                <td><%= customer_sales.get(count) %> </td>
+                                <td><%= customer_sales.get(count+1) %> <i class="bi bi-currency-euro"></i></td>
+                                <td><%= customer_sales.get(count+2) %></td>
+                                <%
+                                    total = total + Double.parseDouble(customer_sales.get(count+1));
+                                    totalquantities = totalquantities + Integer.parseInt(customer_sales.get(count+2));
+                                    count = count + 3;
+                                %>
                             </tr>
-                            <tr>
-                                <td>034</td>
-                                <td>32 <i class="bi bi-currency-euro"></i></td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>143</td>
-                                <td>78 <i class="bi bi-currency-euro"></i></td>
-                                <td>1</td>
-                            </tr>
+                            <%
+                                }
+                            }
+                            %>
+
                             </tbody>
                         </table>
                     </div>
@@ -135,11 +148,13 @@
 
             <br>
             <br>
-
-            <%--Write queries for sum and average in Sale --%>
-            <label for="sum" class="form-label">Total: 360<i class="bi bi-currency-euro"></i></label>
+            <% if (totalquantities!=0){
+                averageprice = total/totalquantities;
+               }
+               %>
+            <label  class="form-label">Total: <%= total == 0 ? "" : total%> <i class="bi bi-currency-euro"></i></label>
             <br>
-            <label for="average" class="form-label">Average: 120<i class="bi bi-currency-euro"></i></label>
+            <label class="form-label">Average: <%= averageprice == 0 ? "" : averageprice %> <i class="bi bi-currency-euro"></i></label>
 
 
             <br>

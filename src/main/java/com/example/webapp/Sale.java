@@ -59,15 +59,32 @@ public class Sale {
             return null;
         }
         try {
-            //different cases if start or end Date is null or both (3 cases)
-            stmt = dbConnection.getCon().prepareStatement(getCustomerSales);
-            stmt.setString(1, cust_id);
+
+            if ((startDate == null) && (endDate == null)){
+                stmt = dbConnection.getCon().prepareStatement(getCustomerSales);
+                stmt.setString(1, cust_id);
+            } else if (startDate == null){
+                stmt = dbConnection.getCon().prepareStatement(getCustomerSalesDatesEnd);
+                stmt.setString(1, cust_id);
+                stmt.setString(2, endDate);
+            } else if (endDate == null) {
+                stmt = dbConnection.getCon().prepareStatement(getCustomerSalesDatesStart);
+                stmt.setString(1, cust_id);
+                stmt.setString(2, startDate);
+            } else {
+                stmt = dbConnection.getCon().prepareStatement(getCustomerSalesDates2);
+                stmt.setString(1, cust_id);
+                stmt.setString(2, startDate);
+                stmt.setString(3, endDate);
+            }
+
             rs = stmt.executeQuery();
+            stmt.close();
             return rs;
         } catch (Exception ignored) {
 
         }
-        return null;
+        return rs;
     }
 
 }
