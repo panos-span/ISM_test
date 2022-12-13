@@ -91,30 +91,92 @@
 
 <%
 
-    String prod = request.getParameter("customer");
+    String prod = request.getParameter("product");
+
+    boolean flag = false;
+    ProductDAO product = new ProductDAO();
+    String name = "", category = "", description = "", id = "";
+    float price = 0;
+    if (prod != null) {
+        if (!prod.equals("")) {
+            String prod_id = null;
+            boolean f = true;
+            try {
+                prod_id = getSearchId(prod);
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+                f = false;
+
+
+%>
+
+<jsp:include page="error_toast.jsp">
+    <jsp:param name="error_message" value="Product not properly submitted"/>
+</jsp:include>
+
+<%
+    }
+    ResultSet rs1 = product.searchProduct(prod_id);
+    try {
+
+        if (rs1 == null) {
+            throw new Exception("Product does not exist");
+        }
+        if (!rs1.next()) {
+            throw new Exception("Product does not exist");
+        }
+        name = rs1.getString("Name");
+        category = rs1.getString("Category");
+        id = rs1.getString("ID");
+        description = rs1.getString("Description");
+        price = rs1.getFloat("Price");
+
+        description = check(description);
+
+        rs1.close();
+
+        session.setAttribute("editP", id);
+    } catch (Exception e) {
+        session.setAttribute("editP", null);
+        if (f) {
+%>
+
+<jsp:include page="error_toast.jsp">
+    <jsp:param name="error_message" value="<%=e.getMessage()%>"/>
+</jsp:include>
+
+<%
+                }
+            }
+        } else {
+            session.setAttribute("editP", null);
+            prod = null;
+        }
+    } else {
+        session.setAttribute("editP", null);
+    }
 %>
 
 <div class="container text-center" style="margin-top: 50px">
-    <form role="search">
+    <form action="manageProduct.jsp" type="POST">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="input-group mb-3">
                     <div class="form-floating">
                         <input class="form-control" list="search_list" type="search" name="product" id="search"
-                               placeholder="Search Existing Product" aria-label="Search">
+                               placeholder="Search Existing Product" aria-label="Search"
+                        value="<%=!name.equals("") ? name + " " + "(ID=" + id + ")" : ""%>">
                         <datalist id="search_list">
                             <%
-                                ProductDAO product = new ProductDAO();
                                 ArrayList<Product> products = product.getAllProducts();
                                 if (products == null) {
                                     throw new Exception("Error, no products exist");
                                 }
 
                                 for (Product prd : products) {
-                                    String name = prd.getName();
-                                    String id = prd.getId();
+                                    String nameP = prd.getName();
+                                    String idP = prd.getId();
                             %>
-                            <option value="<%=name + " (ID=" + id+")"%>">
+                            <option value="<%=nameP + " (ID=" + idP+")"%>">
                                     <%
                                 }
                                 product.close();
@@ -131,12 +193,12 @@
     <br>
     <hr>
     <br>
-    <form class="was-validated" action="ProductServlet" onsubmit="return confirm('Do you really want to submit the form?');">
+    <form class="was-validated" action="ProductServlet" type="POST" onsubmit="return confirm('Do you really want to submit the form?');">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="form-floating">
                     <input type="text" class="form-control" name="name" id="floatingInputGrid1" placeholder="Name"
-                           value="" required>
+                           value="<%=name%>" required>
                     <label for="floatingInputGrid1" class="text-black">Name</label>
                 </div>
             </div>
@@ -148,7 +210,7 @@
                     <div class="form-floating">
                         <input type="number" min="0.01" step="0.01" name="price" class="form-control"
                                id="floatingInputGrid2"
-                               placeholder="Price" value="0" required>
+                               placeholder="Price" value="<%=price%>" required>
                         <label for="floatingInputGrid2" class="text-black">Price</label>
                     </div>
                     <i class="input-group-text bi bi-currency-euro"></i>
@@ -159,7 +221,7 @@
                 <div class="form-floating">
                     <input type="text" class="form-control" id="floatingInputGrid3" name="category"
                            placeholder="Category"
-                           value="">
+                           value="<%=category%>">
                     <label for="floatingInputGrid3" class="text-black">Category</label>
                 </div>
             </div>
@@ -169,7 +231,7 @@
             <div class="col-lg-8">
                 <div class="form-floating">
                 <textarea class="form-control" placeholder="description" name="description" id="description"
-                          style="height: 100px"></textarea>
+                          style="height: 100px"><%=description%></textarea>
                     <label for="description" style="color: black;">Details</label>
                 </div>
             </div>
