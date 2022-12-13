@@ -73,9 +73,10 @@ public class SaleServlet extends HttpServlet {
         double salevalue = price * quantity;
         params[4] = String.valueOf(salevalue);
         product.close();
-        Sale sale = new Sale();
-        sale.insertNewSale(params);
-        sale.close();
+        SaleDAO saleDAO = new SaleDAO();
+        saleDAO.insertNewSale(params);
+        saleDAO.close();
+        customerDAO.close();
         request.setAttribute("action", "true");
         redirect(request, response);
     }

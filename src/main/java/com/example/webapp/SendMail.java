@@ -57,8 +57,8 @@ public class SendMail {
     }
 
     public static class SMTPAuthenticator extends javax.mail.Authenticator {
-        private final String user = "pramataritest@gmail.com";
-        private final String pass = "zffocnenjhioytwd";
+        private final String user = "";
+        private final String pass = "";
 
         public PasswordAuthentication getPasswordAuthentication() {
             return new PasswordAuthentication(user, pass);

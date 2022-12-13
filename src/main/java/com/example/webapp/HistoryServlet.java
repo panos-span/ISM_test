@@ -69,13 +69,13 @@ public class HistoryServlet extends HttpServlet {
             }
         }
         customerDAO.close();
-        Sale sale = new Sale();
-        ResultSet rs2 = sale.getAllCustomerSales(custId, startD, endD);
+        SaleDAO saleDAO = new SaleDAO();
+        ResultSet rs2 = saleDAO.getAllCustomerSales(custId, startD, endD);
         //request.setAttribute("customerSale", rs2);
         request.setAttribute("cust_name", custname);
         request.setAttribute("cust_surname", custsurname);
         request.setAttribute("SalesArraylist", createSalesArraylist(rs2));
-        sale.close();
+        saleDAO.close();
         RequestDispatcher rd = request.getRequestDispatcher("/purchaseHistory.jsp");
         rd.forward(request, response);
 
@@ -86,13 +86,12 @@ public class HistoryServlet extends HttpServlet {
         doPost(request, response);
     }
 
-    public ArrayList<String> createSalesArraylist(ResultSet rs) {
+    public ArrayList<Sale> createSalesArraylist(ResultSet rs) {
         try {
-            ArrayList<String> customer_sales = new ArrayList<>();
+            ArrayList<Sale> customer_sales = new ArrayList<>();
             while (rs.next()) {
-                customer_sales.add(rs.getString("Prod_id"));
-                customer_sales.add(rs.getString("Sale_Value"));
-                customer_sales.add(rs.getString("Quantity"));
+                customer_sales.add(new Sale(rs.getString("Prod_id"),
+                        rs.getDouble("Sale_Value"), rs.getInt("Quantity")));
             }
             rs.close();
             return customer_sales;

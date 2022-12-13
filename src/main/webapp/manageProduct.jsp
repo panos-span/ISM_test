@@ -93,7 +93,6 @@
 
     String prod = request.getParameter("product");
 
-    boolean flag = false;
     ProductDAO product = new ProductDAO();
     String name = "", category = "", description = "", id = "";
     float price = 0;
@@ -105,8 +104,6 @@
                 prod_id = getSearchId(prod);
             } catch (ArrayIndexOutOfBoundsException ignored) {
                 f = false;
-
-
 %>
 
 <jsp:include page="error_toast.jsp">
@@ -241,7 +238,7 @@
         <div class="row justify-content-center">
             <div class="d-grid gap-2 col-lg-8 mx-auto">
                 <button class="btn btn-primary btn-lg" type="submit"
-                        id="button"><%=(prod != null ? (!prod.equals("") ? "Edit" : "Insert") : "Insert")%>
+                        id="button"><%=prod != null ? "Edit" : "Insert"%>
                 </button>
             </div>
         </div>

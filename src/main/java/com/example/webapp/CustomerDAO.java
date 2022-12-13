@@ -18,7 +18,6 @@ public class CustomerDAO {
     private final String searchCustomerPhonesQuery = "select Phone,POSITION FROM customer_phones WHERE ID=?;";
     private final String insertCustomerPhonesQuery = "insert into customer_phones (ID,Phone,POSITION) values (?,?,?);";
     private final String editCustomerQuery = "update customer set Name=?, Surname=?, VAT=?, Address=?, Email=?, Details=? WHERE (ID=?);";
-    //private final String editCustomerPhonesQuery = "update customer_phones set Phone=? WHERE (ID=?);";
     private final String deleteCustomerPhonesQuery = "delete from customer_phones WHERE (ID=?);";
 
     public CustomerDAO() {
@@ -34,7 +33,7 @@ public class CustomerDAO {
             if (dbConnection.getCon() == null) {
                 return null;
             }
-            String selectAllCustomersQuery = "";
+            String selectAllCustomersQuery;
             selectAllCustomersQuery = "select Name,Surname,ID from customer;";
             stmt = dbConnection.getCon().createStatement();
             rs = stmt.executeQuery(selectAllCustomersQuery);
@@ -140,13 +139,6 @@ public class CustomerDAO {
 
     }
 
-    /**
-     *
-     *
-     * @param params
-     * @param phones
-     * @param id
-     */
     public void editCustomer(String[] params, String[] phones, String id) {
         if (dbConnection.getCon() == null) {
             return;

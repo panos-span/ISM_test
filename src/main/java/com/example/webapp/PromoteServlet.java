@@ -15,7 +15,7 @@ public class PromoteServlet extends HttpServlet {
     private final String subject = "Promotion just for you!!!!";
     private final String host = "smtp.gmail.com";
     private final String port = "465";
-    private final String user = "pramataritest@gmail.com";
+    private final String user = "";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
@@ -106,7 +106,6 @@ public class PromoteServlet extends HttpServlet {
             } catch (ArrayIndexOutOfBoundsException ignored) {
                 return true;
             }
-            //params[2] = getSearchId(params[2]);
             CustomerDAO customerDAO = new CustomerDAO();
             ResultSet rs = customerDAO.searchCustomer(params[2]);
             boolean exists;

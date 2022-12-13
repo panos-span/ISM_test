@@ -1,6 +1,7 @@
 <%@ page import="com.example.webapp.CustomerDAO" %>
 <%@ page import="com.example.webapp.Customer" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.webapp.Sale" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <!DOCTYPE html>
@@ -123,20 +124,20 @@
                             <tbody>
                             <%
                                 if (request.getAttribute("cust_name") != null) {
-                                    ArrayList<String> customer_sales = (ArrayList<String>) request.getAttribute("SalesArraylist");
-                                    int count = 0;
-                                    while ((count + 3) <= customer_sales.size()) {
+                                    ArrayList<Sale> customer_sales = (ArrayList<Sale>) request.getAttribute("SalesArraylist");
+                                    for (Sale sale : customer_sales) {
+                                        double price = sale.getSale_value() / sale.getQuantity();
                             %>
                             <tr>
-                                <td><%= customer_sales.get(count) %>
+                                <td><%= sale.getProd_id() %>
                                 </td>
-                                <td><%= customer_sales.get(count + 1) %> <i class="bi bi-currency-euro"></i></td>
-                                <td><%= customer_sales.get(count + 2) %>
+                                <td><%= String.format("%.2f", price) %> <i class="bi bi-currency-euro"></i>
+                                </td>
+                                <td><%= sale.getQuantity() %>
                                 </td>
                                 <%
-                                    total += Double.parseDouble(customer_sales.get(count + 1));
-                                    totalquantities += Integer.parseInt(customer_sales.get(count + 2));
-                                    count += 3;
+                                    total += sale.getSale_value();
+                                    totalquantities += sale.getQuantity();
                                 %>
                             </tr>
                             <%
