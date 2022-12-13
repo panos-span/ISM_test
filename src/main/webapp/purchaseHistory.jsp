@@ -45,6 +45,17 @@
 <br>
 <br>
 
+<%
+    if (request.getAttribute("error") != null) {
+        String error_message = (String) request.getAttribute("error");
+%>
+<jsp:include page="error_toast.jsp">
+    <jsp:param name="error_message" value="<%=error_message%>"/>
+</jsp:include>
+<%
+    }
+%>
+
 <div class="container text-center">
     <!-- Search -->
     <form action="HistoryServlet" type="POST" class="was-validated"
@@ -54,7 +65,9 @@
 
                 <div class="form-floating">
                     <input class="form-control" list="search_list" name="customer" type="search" id="search"
-                           placeholder="Search Existing Customer" aria-label="Search" required>
+                           placeholder="Search Existing Customer"
+                           value="<%=request.getParameter("customer") == null ? "" : request.getParameter("customer")%>"
+                           aria-label="Search" required>
                     <datalist id="search_list">
                         <%
                             CustomerDAO customer = new CustomerDAO();
@@ -96,7 +109,8 @@
                         <table class="table bg-white caption-top">
 
                             <caption class="bg-white text-center">
-                                <h4><%= request.getAttribute("customerSale") == null ? " " : request.getAttribute("cust_name") +" " + request.getAttribute("cust_surname") %></h4>
+                                <h4><%= request.getAttribute("cust_name") == null ? " " : request.getAttribute("cust_name") + " " + request.getAttribute("cust_surname") %>
+                                </h4>
                             </caption>
 
                             <thead>
@@ -108,24 +122,26 @@
                             </thead>
                             <tbody>
                             <%
-                            if (request.getAttribute("customerSale") != null){
-                                ArrayList<String> customer_sales = (ArrayList<String>) request.getAttribute("SalesArraylist");
-                                int count = 0;
-                                while ((count+3) <= customer_sales.size()){
+                                if (request.getAttribute("cust_name") != null) {
+                                    ArrayList<String> customer_sales = (ArrayList<String>) request.getAttribute("SalesArraylist");
+                                    int count = 0;
+                                    while ((count + 3) <= customer_sales.size()) {
                             %>
                             <tr>
-                                <td><%= customer_sales.get(count) %> </td>
-                                <td><%= customer_sales.get(count+1) %> <i class="bi bi-currency-euro"></i></td>
-                                <td><%= customer_sales.get(count+2) %></td>
+                                <td><%= customer_sales.get(count) %>
+                                </td>
+                                <td><%= customer_sales.get(count + 1) %> <i class="bi bi-currency-euro"></i></td>
+                                <td><%= customer_sales.get(count + 2) %>
+                                </td>
                                 <%
-                                    total = total + Double.parseDouble(customer_sales.get(count+1));
-                                    totalquantities = totalquantities + Integer.parseInt(customer_sales.get(count+2));
-                                    count = count + 3;
+                                    total += Double.parseDouble(customer_sales.get(count + 1));
+                                    totalquantities += Integer.parseInt(customer_sales.get(count + 2));
+                                    count += 3;
                                 %>
                             </tr>
                             <%
+                                    }
                                 }
-                            }
                             %>
 
                             </tbody>
@@ -137,31 +153,33 @@
 
             <label>Start Date:
                 <input type="date" id="startdateId" name="startDate"
-                       min="" max="" class="form-control">
+                       min="" max="" class="form-control"
+                       value="<%=request.getParameter("startDate") == null ? "" : request.getParameter("startDate")%>">
             </label>
 
 
             <label>End Date:
                 <input type="date" id="enddateId" name="endDate"
-                       min="" max="" class="form-control">
+                       min="" max="" class="form-control"
+                       value="<%=request.getParameter("endDate") == null ? "" : request.getParameter("endDate")%>">
             </label>
 
             <br>
             <br>
-            <% if (totalquantities!=0){
-                averageprice = total/totalquantities;
-               }
-               %>
-            <label  class="form-label">Total: <%= total == 0 ? "" : total%> <i class="bi bi-currency-euro"></i></label>
+            <% if (totalquantities != 0) {
+                averageprice = total / totalquantities;
+            }
+            %>
+            <label class="form-label">Total: <%= total == 0 ? "" : String.format("%.2f", total)%> <i
+                    class="bi bi-currency-euro"></i></label>
             <br>
-            <label class="form-label">Average: <%= averageprice == 0 ? "" : averageprice %> <i class="bi bi-currency-euro"></i></label>
-
+            <label class="form-label">Average: <%= averageprice == 0 ? "" : String.format("%.2f", averageprice)  %> <i
+                    class="bi bi-currency-euro"></i></label>
 
             <br>
             <br>
-
             <div class="d-grid gap-2 col-6 mx-auto">
-                <button class="btn btn-primary btn-lg" type="submit">Extract</button>
+                <button class="btn btn-primary btn-lg" type="submit" id="button">Extract</button>
             </div>
         </div>
     </form>
@@ -170,6 +188,18 @@
 
 </body>
 <!-- Scripts -->
+<script>
+
+    btn = document.getElementById("button")
+    search = document.getElementById("search")
+    search.addEventListener('change', (event) => {
+        if (search.value !== "") {
+        } else {
+            window.location.href = 'purchaseHistory.jsp';
+        }
+    });
+
+</script>
 <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
 <script src="js/scripts.js"></script> <!-- Custom scripts -->
 <script src="js/bootstrap.bundle.min.js"></script>

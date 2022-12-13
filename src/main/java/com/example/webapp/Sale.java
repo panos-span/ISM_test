@@ -60,10 +60,10 @@ public class Sale {
         }
         try {
 
-            if ((startDate == null) && (endDate == null)){
+            if ((startDate == null) && (endDate == null)) {
                 stmt = dbConnection.getCon().prepareStatement(getCustomerSales);
                 stmt.setString(1, cust_id);
-            } else if (startDate == null){
+            } else if (startDate == null) {
                 stmt = dbConnection.getCon().prepareStatement(getCustomerSalesDatesEnd);
                 stmt.setString(1, cust_id);
                 stmt.setString(2, endDate);
@@ -79,12 +79,10 @@ public class Sale {
             }
 
             rs = stmt.executeQuery();
-            stmt.close();
             return rs;
         } catch (Exception ignored) {
-
+            return null;
         }
-        return rs;
     }
 
 }

@@ -22,24 +22,32 @@ public class HistoryServlet extends HttpServlet {
             throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
         String[] paramNames = {"customer", "startDate", "endDate"};
-        //PrintWriter out = new PrintWriter(response.getWriter(), true);
+
         String cust = request.getParameter(paramNames[0]);
         String startD = request.getParameter(paramNames[1]);
         String endD = request.getParameter(paramNames[2]);
-        String[] params = cust.split(" ");
-        String custname = params[0];
-        String custsurname = params[1];
-        String custId = getSearchId(params[2]);
 
-        String error_message = null;
+        if (startD.equals("")) {
+            startD = null;
+        }
+        if (endD.equals("")) {
+            endD = null;
+        }
+
+        String custId;
+        String error_message;
         try {
-            params[0] = getSearchId(params[0]);
+            custId = getSearchId(cust);
         } catch (ArrayIndexOutOfBoundsException ignored) {
             error_message = "Customer not properly submitted";
             request.setAttribute("error", error_message);
             RequestDispatcher rd = request.getRequestDispatcher("/purchaseHistory.jsp");
             rd.forward(request, response);
+            return;
         }
+        String[] params = cust.split(" ");
+        String custname = params[0];
+        String custsurname = params[1];
 
         CustomerDAO customerDAO = new CustomerDAO();
         ResultSet rs = customerDAO.searchCustomer(custId);
@@ -53,14 +61,23 @@ public class HistoryServlet extends HttpServlet {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
-
+        customerDAO.close();
         Sale sale = new Sale();
         ResultSet rs2 = sale.getAllCustomerSales(custId, startD, endD);
-        request.setAttribute("customerSale", rs2);
+        //request.setAttribute("customerSale", rs2);
         request.setAttribute("cust_name", custname);
         request.setAttribute("cust_surname", custsurname);
-        request.setAttribute("SalesArraylist",createSalesArraylist(rs2));
+        request.setAttribute("SalesArraylist", createSalesArraylist(rs2));
+        sale.close();
+        RequestDispatcher rd = request.getRequestDispatcher("/purchaseHistory.jsp");
+        rd.forward(request, response);
 
     }
 
@@ -71,7 +88,7 @@ public class HistoryServlet extends HttpServlet {
 
     public ArrayList<String> createSalesArraylist(ResultSet rs) {
         try {
-            ArrayList<String> customer_sales = new ArrayList<String>();
+            ArrayList<String> customer_sales = new ArrayList<>();
             while (rs.next()) {
                 customer_sales.add(rs.getString("Prod_id"));
                 customer_sales.add(rs.getString("Sale_Value"));
