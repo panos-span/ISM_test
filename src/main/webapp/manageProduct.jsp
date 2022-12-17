@@ -154,7 +154,7 @@
 %>
 
 <div class="container text-center" style="margin-top: 50px">
-    <form action="manageProduct.jsp" type="POST">
+    <form action="manageProduct.jsp" method="POST">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="input-group mb-3">
@@ -190,7 +190,7 @@
     <br>
     <hr>
     <br>
-    <form class="was-validated" action="ProductServlet" type="POST" onsubmit="return confirm('Do you really want to submit the form?');">
+    <form class="was-validated" action="ProductServlet" method="POST" onsubmit="return confirm('Do you really want to submit the form?');">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="form-floating">

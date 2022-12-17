@@ -38,7 +38,7 @@ CREATE TABLE Product
     Price       FLOAT        NOT NULL,
     Category    VARCHAR(255),
     Description LONGTEXT
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE Sale
 (

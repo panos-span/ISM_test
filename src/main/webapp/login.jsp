@@ -29,7 +29,7 @@
 <body class="dark-mode">
 
 <div class="container center-screen">
-    <form action="LoginServlet" type="POST" class="row g-3 needs-validation">
+    <form action="LoginServlet" method="POST" class="row g-3 needs-validation">
         <%
             if (f) {
         %>

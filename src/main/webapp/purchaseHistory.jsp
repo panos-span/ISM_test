@@ -59,8 +59,7 @@
 
 <div class="container text-center">
     <!-- Search -->
-    <form action="HistoryServlet" type="POST" class="was-validated"
-          onsubmit="return confirm('Do you really want to submit the form?');">
+    <form action="HistoryServlet" method="POST" class="was-validated">
         <div class="row justify-content-center">
             <div class="col-lg-6">
 

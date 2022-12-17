@@ -86,7 +86,7 @@
     }
 %>
 
-<form class="container text-center was-validated" action="SaleServlet"
+<form class="container text-center was-validated" action="SaleServlet" method="POST"
       onsubmit="return confirm('Do you really want to submit the form?');">
     <div class="row justify-content-center">
         <div class="col-lg-8">

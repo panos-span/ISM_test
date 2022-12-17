@@ -88,7 +88,7 @@
 
 <!-- Search -->
 <div class="container text-center" style="margin-top: 100px">
-    <form role="search" action="PromoteServlet" type="POST" class="was-validated">
+    <form role="search" action="PromoteServlet" method="POST" class="was-validated">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="input-group mb-3">
@@ -124,7 +124,7 @@
             </div>
         </div>
     </form>
-    <form role="search" action="PromoteServlet" type="POST" class="was-validated">
+    <form role="search" action="PromoteServlet" method="POST" class="was-validated">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="input-group mb-3">
@@ -165,7 +165,7 @@
 <br>
 
 <div class="container text-center">
-    <form action="PromoteServlet" type="POST" onsubmit="myFunction();">
+    <form action="PromoteServlet" method="POST" onsubmit="myFunction();">
         <!-- Tables-->
         <div class="row justify-content-evenly">
             <div class="col-5">
