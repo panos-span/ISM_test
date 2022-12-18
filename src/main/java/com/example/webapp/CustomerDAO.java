@@ -158,11 +158,11 @@ public class CustomerDAO {
             stmt1 = dbConnection.getCon().prepareStatement(insertCustomerQuery);
             int index = 0;
             enterCustInfo(stmt1, params, index);
-            String customer_count = "SELECT COUNT(*) AS count FROM customer;";
+            String getLastCustId = "select ID from customer ORDER BY id DESC LIMIT 1;";
             stmt = dbConnection.getCon().createStatement();
-            rs = stmt.executeQuery(customer_count);
+            rs = stmt.executeQuery(getLastCustId);
             rs.next();
-            enterCustPhonesInfo(stmt2, phones, rs.getString("count"));
+            enterCustPhonesInfo(stmt2, phones, rs.getString("ID"));
         } catch (Exception ignored) {
 
         }

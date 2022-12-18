@@ -11,7 +11,7 @@ VALUES ("product_manager", "pm1234", "Natal", "Spart", "6942474956", "t8200159@a
 INSERT INTO product (Name, Price, Category, Description) VALUES ("Protokaladista",420.69,"beverage",null);
 INSERT INTO product (Name, Price, Category, Description) VALUES ("Physikos chimos protrokali",69.42,"beverage",null);
 
-
+select * from customer ORDER BY id DESC LIMIT 1;
 
 DELETE FROM customer
 WHERE ID=8625;
