@@ -46,17 +46,17 @@ public class CustomerServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         String id = (String) session.getAttribute("edit");
         String action;
-        if (customer.checkDuplicate(params[4])) {
-            RequestDispatcher rd = request.getRequestDispatcher("/manageCustomer.jsp");
-            request.setAttribute("error", String.format("Customer with email: %s already exists", params[4]));
-            rd.forward(request, response);
-            customer.close();
-            return;
-        }
         if (id != null) {
             customer.editCustomer(params, phones, id);
             action = "Edit";
         } else {
+            if (customer.checkDuplicate(params[4])) {
+                RequestDispatcher rd = request.getRequestDispatcher("/manageCustomer.jsp");
+                request.setAttribute("error", String.format("Customer with email: %s already exists", params[4]));
+                rd.forward(request, response);
+                customer.close();
+                return;
+            }
             customer.insertNewCustomer(params, phones);
             action = "Insert";
         }
