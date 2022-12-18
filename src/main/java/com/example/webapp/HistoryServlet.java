@@ -10,6 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * <p>HistoryServlet class.</p>
+ *
+ * @author ismgroup52
+ * @version $Id: $1.0
+ */
 public class HistoryServlet extends HttpServlet {
 
     private String getSearchId(String x) {
@@ -18,6 +24,7 @@ public class HistoryServlet extends HttpServlet {
         return y[1];
     }
 
+    /** {@inheritDoc} */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
@@ -81,11 +88,18 @@ public class HistoryServlet extends HttpServlet {
 
     }
 
+    /** {@inheritDoc} */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         doPost(request, response);
     }
 
+    /**
+     * <p>createSalesArraylist.</p>
+     *
+     * @param rs a {@link java.sql.ResultSet} object
+     * @return a {@link java.util.ArrayList} object
+     */
     public ArrayList<Sale> createSalesArraylist(ResultSet rs) {
         try {
             ArrayList<Sale> customer_sales = new ArrayList<>();

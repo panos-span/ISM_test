@@ -5,6 +5,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * <p>DBConnection class.</p>
+ *
+ * @author ismgroup52
+ * @version $Id: $1.0
+ */
 public class DBConnection {
     private String errorMessages = "";
 
@@ -14,7 +20,7 @@ public class DBConnection {
      * Provides a connection with the Database Server. Initializes JDBC driver
      * for MySQL. Establishes a connection with the Database Server.
      *
-     * @throws SQLException (with the appropriate message) if any driver or connection
+     * @throws java.sql.SQLException (with the appropriate message) if any driver or connection
      *                      error occurred.
      */
     public void open() throws SQLException {
@@ -44,7 +50,7 @@ public class DBConnection {
      * Ends the connection with the database Server. Closes all Statements and
      * ResultSets. Finally, closes the connection with the Database Server.
      *
-     * @throws SQLException (with the appropriate message) if any error occurred.
+     * @throws java.sql.SQLException (with the appropriate message) if any error occurred.
      */
     public void close() throws SQLException {
         try {
@@ -57,6 +63,11 @@ public class DBConnection {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>con</code>.</p>
+     *
+     * @return a {@link java.sql.Connection} object
+     */
     public Connection getCon() {
         return con;
     }

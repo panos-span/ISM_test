@@ -4,9 +4,9 @@ INSERT INTO Customer (ID, Name, Surname, VAT, Address, Email, Details)
 VALUES (2, "petros", "gotzilas", 123, "evrou-11", "spyros@paradise.gr", null);
 
 INSERT INTO User (Username, Password, Name, Surname, Phone, Email, Role)
-VALUES ("mpampis", "sougias", "panos", "span", "6969696969", "t2880158@aueb.gr", "Salesman");
+VALUES ("salesman", "s1234", "Panos", "Span", "6947324456", "t8200158@aueb.gr", "Salesman");
 INSERT INTO User (Username, Password, Name, Surname, Phone, Email, Role)
-VALUES ("petros", "gotzilas", "panos", "span", "6969696969", "t8200158@aueb.gr", "Product Manager");
+VALUES ("product_manager", "pm1234", "Natal", "Spart", "6942474956", "t8200159@aueb.gr", "Product Manager");
 
 INSERT INTO product (Name, Price, Category, Description) VALUES ("Protokaladista",420.69,"beverage",null);
 INSERT INTO product (Name, Price, Category, Description) VALUES ("Physikos chimos protrokali",69.42,"beverage",null);
@@ -20,7 +20,7 @@ FROM customer
 WHERE ID=1;
 
 SELECT COUNT(*) FROM customer;
-insert into sale (Cust_id, Prod_id, Sale_Date, Quantity, Sale_Value) values (12981,1,"1000-01-02",5,25);
+insert into saleDAO (Cust_id, Prod_id, Sale_Date, Quantity, Sale_Value) values (12981,1,"1000-01-02",5,25);
 
 insert into customer (Name, Surname, VAT, Address, Email, Details)
 values ("Spyros","Gartop","5636543", "Paradisou 420, Thessaloniki","spyrakos@paradise.gr", "Gionis");
@@ -39,3 +39,5 @@ update customer set Name="Spyros", Surname="Gartop", VAT="5636543", Address="Par
 delete from customer_phones where (ID=1);
 
 select Phone FROM customer_phones WHERE ID=12981;
+
+ALTER TABLE Customer AUTO_INCREMENT = 5;

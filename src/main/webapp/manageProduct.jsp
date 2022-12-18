@@ -74,6 +74,17 @@
     <jsp:param name="role" value="<%=role%>"/>
 </jsp:include>
 
+<%
+    if (request.getAttribute("error") != null) {
+        String error_message = (String) request.getAttribute("error");
+%>
+<jsp:include page="error_toast.jsp">
+    <jsp:param name="error_message" value="<%=error_message%>"/>
+</jsp:include>
+<%
+    }
+%>
+
 <%!
     private String getSearchId(String x) {
         String[] y = x.split("=");

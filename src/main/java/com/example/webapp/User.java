@@ -4,6 +4,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * <p>User class.</p>
+ *
+ * @author ismgroup52
+ * @version $Id: $1.0
+ */
 public class User {
 
     private final DBConnection dbConnection = new DBConnection();
@@ -11,6 +17,9 @@ public class User {
     private ResultSet rs = null;
     private final String selectUserQuery = "select Role from user where Username=? AND Password=?;";
 
+    /**
+     * <p>Constructor for User.</p>
+     */
     public User() {
         try {
             dbConnection.open();
@@ -19,6 +28,13 @@ public class User {
         }
     }
 
+    /**
+     * <p>getUserRole.</p>
+     *
+     * @param username a {@link java.lang.String} object
+     * @param password a {@link java.lang.String} object
+     * @return a {@link java.lang.String} object
+     */
     public String getUserRole(String username, String password) {
         try {
             stmt = dbConnection.getCon().prepareStatement(selectUserQuery);

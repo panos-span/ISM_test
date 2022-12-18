@@ -6,6 +6,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * <p>CustomerDAO class.</p>
+ *
+ * @author ismgroup52
+ * @version $Id: $1.0
+ */
 public class CustomerDAO {
 
     private final DBConnection dbConnection = new DBConnection();
@@ -20,6 +26,9 @@ public class CustomerDAO {
     private final String editCustomerQuery = "update customer set Name=?, Surname=?, VAT=?, Address=?, Email=?, Details=? WHERE (ID=?);";
     private final String deleteCustomerPhonesQuery = "delete from customer_phones WHERE (ID=?);";
 
+    /**
+     * <p>Constructor for CustomerDAO.</p>
+     */
     public CustomerDAO() {
         try {
             dbConnection.open();
@@ -28,6 +37,11 @@ public class CustomerDAO {
         }
     }
 
+    /**
+     * <p>getAllCustomers.</p>
+     *
+     * @return a {@link java.util.ArrayList} object
+     */
     public ArrayList<Customer> getAllCustomers() {
         try {
             if (dbConnection.getCon() == null) {
@@ -51,6 +65,32 @@ public class CustomerDAO {
         }
     }
 
+    public boolean checkDuplicate(String email) {
+        try {
+            if (dbConnection.getCon() == null) {
+                return false;
+            }
+            String getEmailQuery;
+            getEmailQuery = "select Email from customer where Email=?;";
+            stmt1 = dbConnection.getCon().prepareStatement(getEmailQuery);
+            stmt1.setString(1, email);
+            rs = stmt1.executeQuery();
+            boolean f = rs.next();
+            rs.close();
+            stmt1.close();
+            return f;
+        } catch (Exception e5) {
+            return false;
+        }
+    }
+
+
+    /**
+     * <p>searchCustomer.</p>
+     *
+     * @param id a {@link java.lang.String} object
+     * @return a {@link java.sql.ResultSet} object
+     */
     public ResultSet searchCustomer(String id) {
         try {
             if (dbConnection.getCon() == null) {
@@ -65,6 +105,12 @@ public class CustomerDAO {
         }
     }
 
+    /**
+     * <p>searchCustomerPhones.</p>
+     *
+     * @param id a {@link java.lang.String} object
+     * @return a {@link java.sql.ResultSet} object
+     */
     public ResultSet searchCustomerPhones(String id) {
         try {
             if (dbConnection.getCon() == null) {
@@ -81,6 +127,9 @@ public class CustomerDAO {
     }
 
 
+    /**
+     * <p>close.</p>
+     */
     public void close() {
         try {
             if (stmt != null)
@@ -93,6 +142,12 @@ public class CustomerDAO {
         }
     }
 
+    /**
+     * <p>insertNewCustomer.</p>
+     *
+     * @param params an array of {@link java.lang.String} objects
+     * @param phones an array of {@link java.lang.String} objects
+     */
     public void insertNewCustomer(String[] params, String[] phones) {
         if (dbConnection.getCon() == null) {
             return;
@@ -139,6 +194,13 @@ public class CustomerDAO {
 
     }
 
+    /**
+     * <p>editCustomer.</p>
+     *
+     * @param params an array of {@link java.lang.String} objects
+     * @param phones an array of {@link java.lang.String} objects
+     * @param id     a {@link java.lang.String} object
+     */
     public void editCustomer(String[] params, String[] phones, String id) {
         if (dbConnection.getCon() == null) {
             return;

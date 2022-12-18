@@ -5,12 +5,20 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import jakarta.servlet.http.HttpSession;
-import java.io.PrintWriter;
+import java.io.IOException;
 
+/**
+ * <p>CustomerServlet class.</p>
+ *
+ * @author ismgroup52
+ * @version $Id: $1.0
+ */
 public class CustomerServlet extends HttpServlet {
 
+    /**
+     * {@inheritDoc}
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
@@ -38,6 +46,13 @@ public class CustomerServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         String id = (String) session.getAttribute("edit");
         String action;
+        if (customer.checkDuplicate(params[4])) {
+            RequestDispatcher rd = request.getRequestDispatcher("/manageCustomer.jsp");
+            request.setAttribute("error", String.format("Customer with email: %s already exists", params[4]));
+            rd.forward(request, response);
+            customer.close();
+            return;
+        }
         if (id != null) {
             customer.editCustomer(params, phones, id);
             action = "Edit";
@@ -54,6 +69,9 @@ public class CustomerServlet extends HttpServlet {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         /*

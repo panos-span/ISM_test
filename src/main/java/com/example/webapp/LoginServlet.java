@@ -8,8 +8,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * <p>LoginServlet class.</p>
+ *
+ * @author ismgroup52
+ * @version $Id: $1.0
+ */
 public class LoginServlet extends HttpServlet {
 
+    /** {@inheritDoc} */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
@@ -34,6 +41,7 @@ public class LoginServlet extends HttpServlet {
 
     }
 
+    /** {@inheritDoc} */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         doPost(request, response);

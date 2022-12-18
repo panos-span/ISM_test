@@ -10,6 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * <p>PromoteServlet class.</p>
+ *
+ * @author ismgroup52
+ * @version $Id: $1.0
+ */
 public class PromoteServlet extends HttpServlet {
 
     private final String subject = "Promotion just for you!!!!";
@@ -17,6 +23,7 @@ public class PromoteServlet extends HttpServlet {
     private final String port = "465";
     private final String user = "";
 
+    /** {@inheritDoc} */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
@@ -54,6 +61,7 @@ public class PromoteServlet extends HttpServlet {
         rd.forward(request, response);
     }
 
+    /** {@inheritDoc} */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         doPost(request, response);
@@ -129,12 +137,7 @@ public class PromoteServlet extends HttpServlet {
         return f;
     }
 
-    /**
-     * Note: while checking if product/customer exists, you can get name and other useful elements
-     *
-     * @param request
-     * @return
-     */
+
     private boolean checkForAddedProduct(HttpServletRequest request) {
         String prod = request.getParameter("product");
         boolean f = false;

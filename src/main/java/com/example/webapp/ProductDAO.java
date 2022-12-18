@@ -6,6 +6,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * <p>ProductDAO class.</p>
+ *
+ * @author ismgroup52
+ * @version $Id: $1.0
+ */
 public class ProductDAO {
 
     private final DBConnection dbConnection = new DBConnection();
@@ -15,6 +21,9 @@ public class ProductDAO {
     private Statement stmt = null;
     private ResultSet rs = null;
 
+    /**
+     * <p>Constructor for ProductDAO.</p>
+     */
     public ProductDAO() {
         try {
             dbConnection.open();
@@ -23,6 +32,11 @@ public class ProductDAO {
         }
     }
 
+    /**
+     * <p>getAllProducts.</p>
+     *
+     * @return a {@link java.util.ArrayList} object
+     */
     public ArrayList<Product> getAllProducts() {
         try {
             if (dbConnection.getCon() == null) {
@@ -30,14 +44,15 @@ public class ProductDAO {
                 return null;
             }
             String selectAllProductsQuery = "";
-            selectAllProductsQuery = "select Name,ID from product;";
+            selectAllProductsQuery = "select Name,ID,Price from product;";
             stmt = dbConnection.getCon().createStatement();
             rs = stmt.executeQuery(selectAllProductsQuery);
             ArrayList<Product> products = new ArrayList<>();
             while (rs.next()) {
                 String name = rs.getString("Name");
                 String id = rs.getString("id");
-                products.add(new Product(id, name, 0));
+                double price = rs.getDouble("Price");
+                products.add(new Product(id, name, price));
             }
             rs.close();
             return products;
@@ -46,6 +61,32 @@ public class ProductDAO {
         }
     }
 
+    public boolean checkDuplicate(String name){
+        try {
+            if (dbConnection.getCon() == null) {
+                //errorMessages = "You must establish a connection first!";
+                return false;
+            }
+            String getNameQuery = "";
+            getNameQuery = "select Name from product where Name=?;";
+            stmt1 = dbConnection.getCon().prepareStatement(getNameQuery);
+            stmt1.setString(1, name);
+            rs = stmt1.executeQuery();
+            boolean f = rs.next();
+            rs.close();
+            stmt1.close();
+            return f;
+        } catch (Exception e5) {
+            return false;
+        }
+    }
+
+    /**
+     * <p>searchProduct.</p>
+     *
+     * @param id a {@link java.lang.String} object
+     * @return a {@link java.sql.ResultSet} object
+     */
     public ResultSet searchProduct(String id) {
         try {
             if (dbConnection.getCon() == null) {
@@ -61,6 +102,12 @@ public class ProductDAO {
         }
     }
 
+    /**
+     * <p>getProductPrice.</p>
+     *
+     * @param ID a {@link java.lang.String} object
+     * @return a double
+     */
     public double getProductPrice(String ID) {
         try {
             if (dbConnection.getCon() == null) {
@@ -77,6 +124,9 @@ public class ProductDAO {
         }
     }
 
+    /**
+     * <p>close.</p>
+     */
     public void close() {
         try {
             if (stmt != null)
@@ -88,6 +138,11 @@ public class ProductDAO {
             throw new RuntimeException(e);
         }
     }
+    /**
+     * <p>insertNewProduct.</p>
+     *
+     * @param params an array of {@link java.lang.String} objects
+     */
     public void insertNewProduct(String[] params) {
         if (dbConnection.getCon() == null) {
             return;
@@ -108,6 +163,12 @@ public class ProductDAO {
         }
     }
 
+    /**
+     * <p>editProduct.</p>
+     *
+     * @param params an array of {@link java.lang.String} objects
+     * @param id a {@link java.lang.String} object
+     */
     public void editProduct(String[] params, String id) {
         if (dbConnection.getCon() == null) {
             return;

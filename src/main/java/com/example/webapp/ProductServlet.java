@@ -8,8 +8,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * <p>ProductServlet class.</p>
+ *
+ * @author ismgroup52
+ * @version $Id: $1.0
+ */
 public class ProductServlet extends HttpServlet {
 
+    /** {@inheritDoc} */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
@@ -24,6 +31,13 @@ public class ProductServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         String id = (String) session.getAttribute("editP");
         String action;
+        if (product.checkDuplicate(params[0])) {
+            RequestDispatcher rd = request.getRequestDispatcher("/manageProduct.jsp");
+            request.setAttribute("error", String.format("Product with name: %s already exists", params[0]));
+            rd.forward(request, response);
+            product.close();
+            return;
+        }
         if (id != null) {
             product.editProduct(params, id);
             action = "Edit";
@@ -39,6 +53,7 @@ public class ProductServlet extends HttpServlet {
         rd.forward(request, response);
     }
 
+    /** {@inheritDoc} */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         doPost(request, response);

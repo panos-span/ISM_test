@@ -4,6 +4,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * <p>SaleDAO class.</p>
+ *
+ * @author ismgroup52
+ * @version $Id: $1.0
+ */
 public class SaleDAO {
 
     private DBConnection dbConnection = new DBConnection();
@@ -16,6 +22,9 @@ public class SaleDAO {
     private final String getCustomerSalesDatesEnd = "select * from sale where Cust_id=? and Sale_Date <=?;";
 
 
+    /**
+     * <p>Constructor for SaleDAO.</p>
+     */
     public SaleDAO() {
         try {
             dbConnection.open();
@@ -24,6 +33,9 @@ public class SaleDAO {
         }
     }
 
+    /**
+     * <p>close.</p>
+     */
     public void close() {
         try {
             if (stmt != null)
@@ -37,6 +49,11 @@ public class SaleDAO {
     }
 
 
+    /**
+     * <p>insertNewSale.</p>
+     *
+     * @param params an array of {@link java.lang.String} objects
+     */
     public void insertNewSale(String[] params) {
         if (dbConnection.getCon() == null) {
             return;
@@ -54,6 +71,14 @@ public class SaleDAO {
         }
     }
 
+    /**
+     * <p>getAllCustomerSales.</p>
+     *
+     * @param cust_id a {@link java.lang.String} object
+     * @param startDate a {@link java.lang.String} object
+     * @param endDate a {@link java.lang.String} object
+     * @return a {@link java.sql.ResultSet} object
+     */
     public ResultSet getAllCustomerSales(String cust_id, String startDate, String endDate) {
         if (dbConnection.getCon() == null) {
             return null;

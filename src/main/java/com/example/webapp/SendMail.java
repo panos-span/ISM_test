@@ -11,8 +11,24 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * <p>SendMail class.</p>
+ *
+ * @author ismgroup52
+ * @version $Id: $1.0
+ */
 public class SendMail {
 
+    /**
+     * <p>send.</p>
+     *
+     * @param from a {@link java.lang.String} object
+     * @param host a {@link java.lang.String} object
+     * @param port a {@link java.lang.String} object
+     * @param customers a {@link java.util.ArrayList} object
+     * @param subject a {@link java.lang.String} object
+     * @param text a {@link java.lang.String} object
+     */
     public static void send(String from, String host, String port, ArrayList<Customer> customers, String subject, String text) {
 
         Properties props = new Properties();
@@ -28,7 +44,7 @@ public class SendMail {
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.socketFactory.fallback", "false");
 
-        SecurityManager security = System.getSecurityManager();
+        //SecurityManager security = System.getSecurityManager();
 
         try {
             Authenticator auth = new SMTPAuthenticator();

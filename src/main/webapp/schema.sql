@@ -8,7 +8,7 @@ CREATE TABLE User
     Phone    VARCHAR(10)  NOT NULL,
     Email    VARCHAR(255) NOT NULL,
     Role     VARCHAR(255) NOT NULL
-);
+) DEFAULT CHARSET = utf8;
 
 CREATE TABLE Customer
 (
@@ -17,39 +17,39 @@ CREATE TABLE Customer
     Surname VARCHAR(255) NOT NULL,
     VAT     VARCHAR(255),
     Address VARCHAR(255) NOT NULL,
-    Email   VARCHAR(255) NOT NULL,
+    Email   VARCHAR(255) NOT NULL UNIQUE,
     Details LONGTEXT
-);
+) DEFAULT CHARSET = utf8;
 
 CREATE TABLE Customer_Phones
 (
-    ID    INT NOT NULL REFERENCES Customer (ID)
+    ID       INT         NOT NULL REFERENCES Customer (ID)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    Phone VARCHAR(10) NOT NULL,
-    POSITION INT NOT NULL,
+    Phone    VARCHAR(10) NOT NULL,
+    POSITION INT         NOT NULL,
     CONSTRAINT CP PRIMARY KEY (ID, Phone)
 );
 
 CREATE TABLE Product
 (
     ID          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Name        VARCHAR(255) NOT NULL,
+    Name        VARCHAR(255) NOT NULL UNIQUE,
     Price       FLOAT        NOT NULL,
     Category    VARCHAR(255),
     Description LONGTEXT
-) DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET = utf8;
 
 CREATE TABLE Sale
 (
-    Cust_id    INT      NOT NULL REFERENCES Customer (ID)
+    Cust_id    INT   NOT NULL REFERENCES Customer (ID)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    Prod_id    INT      NOT NULL REFERENCES Product (ID)
+    Prod_id    INT   NOT NULL REFERENCES Product (ID)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    Sale_Date  DATE NOT NULL,
-    Quantity   INT      NOT NULL,
-    Sale_Value FLOAT    NOT NULL,
+    Sale_Date  DATE  NOT NULL,
+    Quantity   INT   NOT NULL,
+    Sale_Value FLOAT NOT NULL,
     CONSTRAINT SA PRIMARY KEY (Cust_id, Prod_id, Sale_Date)
 );

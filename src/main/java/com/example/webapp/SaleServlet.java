@@ -9,6 +9,12 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * <p>SaleServlet class.</p>
+ *
+ * @author ismgroup52
+ * @version $Id: $1.0
+ */
 public class SaleServlet extends HttpServlet {
 
     private String getSearchId(String x) {
@@ -17,6 +23,7 @@ public class SaleServlet extends HttpServlet {
         return y[1];
     }
 
+    /** {@inheritDoc} */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
@@ -87,6 +94,7 @@ public class SaleServlet extends HttpServlet {
     }
 
 
+    /** {@inheritDoc} */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         doPost(request, response);

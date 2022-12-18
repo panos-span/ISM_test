@@ -27,18 +27,18 @@
 %>
 
 <body class="dark-mode">
-
+<%
+    if (f) {
+%>
+<div class="alert alert-danger text-center" role="alert">
+    <i class="bi bi-x-circle-fill"></i> Invalid username or password
+</div>
+<%
+    }
+%>
 <div class="container center-screen">
     <form action="LoginServlet" method="POST" class="row g-3 needs-validation">
-        <%
-            if (f) {
-        %>
-        <div class="alert alert-danger text-center" role="alert">
-            <i class="bi bi-x-circle-fill"></i> Invalid username or password
-        </div>
-        <%
-            }
-        %>
+
 
         <h1>Login</h1>
         <div class="input-group mb-3">
@@ -60,9 +60,17 @@
             </span>
         </div>
         <button type="submit" class="btn btn-primary text-center">Submit</button>
+
     </form>
+
 </div>
 
+<div class="container text-center" style="margin-top: -200px">
+    <div class="alert alert-info text-center" role="alert">
+        Salesman: Username - <strong>salesman</strong> - Password: <strong>s1234</strong> <br>
+        Product Manager: Username - <strong>product_manager</strong> - Password: <strong>pm1234</strong>
+    </div>
+</div>
 </body>
 
 <script src="js/bootstrap.bundle.min.js"></script>
