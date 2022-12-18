@@ -22,6 +22,7 @@ public class CustomerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         String[] paramNames = {"name", "surname", "vat", "email", "details"};
         String[] phoneNames = {"phone_1", "phone_2"};
         String[] params = new String[6];

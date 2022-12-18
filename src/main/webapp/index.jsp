@@ -24,17 +24,18 @@
     <jsp:param name="role" value="<%=role%>"/>
 </jsp:include>
 
-
-<div class="text-center" style="margin-top: 100px">
-    <h1> ERP MANAGER</h1>
-</div>
 <%
     String toogler = "";
     if (role == null) {
         toogler = "disabled";
         role = "";
     }
+    if (!role.equals("")) {
 %>
+<div class="text-center" style="margin-top: 100px">
+    <h1> ERP MANAGER</h1>
+</div>
+
 <div class="grid-container2">
     <div class="grid-item grid-item-1">
         <a class="nav-link <%=toogler%> <%=(role.equals("Salesman") ? "active" : "disabled")%>" href="customers.jsp">
@@ -56,7 +57,16 @@
         </a>
     </div>
 </div>
-
+<%
+} else {
+%>
+<div class="container text-center" style="margin-top: 100px">
+    <h1> Please login to continue</h1>
+    <a class="navbar-brand" href="login.jsp"><img src="images/logo-3.png" alt="Badge" width="402"></a>
+</div>
+<%
+    }
+%>
 </body>
 <!-- Scripts -->
 <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->

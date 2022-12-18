@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
             rd.forward(request, response);
             return;
         }
-
+        user.close();
         session.setAttribute("role", role);
         RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);

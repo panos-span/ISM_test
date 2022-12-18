@@ -31,17 +31,17 @@ public class ProductServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         String id = (String) session.getAttribute("editP");
         String action;
-        if (product.checkDuplicate(params[0])) {
-            RequestDispatcher rd = request.getRequestDispatcher("/manageProduct.jsp");
-            request.setAttribute("error", String.format("Product with name: %s already exists", params[0]));
-            rd.forward(request, response);
-            product.close();
-            return;
-        }
         if (id != null) {
             product.editProduct(params, id);
             action = "Edit";
         } else {
+            if (product.checkDuplicate(params[0])) {
+                RequestDispatcher rd = request.getRequestDispatcher("/manageProduct.jsp");
+                request.setAttribute("error", String.format("Product with name: %s already exists", params[0]));
+                rd.forward(request, response);
+                product.close();
+                return;
+            }
             product.insertNewProduct(params);
             action = "Insert";
         }

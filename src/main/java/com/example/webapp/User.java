@@ -29,6 +29,21 @@ public class User {
     }
 
     /**
+     * <p>close.</p>
+     */
+    public void close() {
+        try {
+            if (stmt != null)
+                stmt.close();
+            if (rs != null)
+                rs.close();
+            dbConnection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * <p>getUserRole.</p>
      *
      * @param username a {@link java.lang.String} object

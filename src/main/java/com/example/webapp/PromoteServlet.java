@@ -27,6 +27,7 @@ public class PromoteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         boolean redirect = checkForAddedClient(request);
         if (checkForAddedProduct(request) || checkForRemovedClient(request) || checkForRemovedProduct(request)) {
             redirect = true;

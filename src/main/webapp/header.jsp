@@ -13,8 +13,8 @@
 %>
 
 <nav class="navbar navbar-expand-lg bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="index.jsp"><img src="images/logo.png" alt="Badge" width="60px"></a>
+    <div class="container-fluid"><!--125px για αλλη εικόνα-->
+        <a class="navbar-brand" href="index.jsp"><img src="images/logo-3.png" alt="Badge" width="75px"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

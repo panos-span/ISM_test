@@ -22,6 +22,7 @@
 <body class="dark-mode">
 
 <%
+    request.setCharacterEncoding("UTF-8");
     String role = (String) session.getAttribute("role");
 
     if (role == null) {

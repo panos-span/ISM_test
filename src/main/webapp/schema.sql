@@ -8,7 +8,8 @@ CREATE TABLE User
     Phone    VARCHAR(10)  NOT NULL,
     Email    VARCHAR(255) NOT NULL,
     Role     VARCHAR(255) NOT NULL
-) DEFAULT CHARSET = utf8;
+) DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
 CREATE TABLE Customer
 (
@@ -19,7 +20,8 @@ CREATE TABLE Customer
     Address VARCHAR(255) NOT NULL,
     Email   VARCHAR(255) NOT NULL UNIQUE,
     Details LONGTEXT
-) DEFAULT CHARSET = utf8;
+) DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
 CREATE TABLE Customer_Phones
 (
@@ -38,7 +40,8 @@ CREATE TABLE Product
     Price       FLOAT        NOT NULL,
     Category    VARCHAR(255),
     Description LONGTEXT
-) DEFAULT CHARSET = utf8;
+) DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
 CREATE TABLE Sale
 (
