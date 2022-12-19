@@ -60,7 +60,7 @@
 <%
 } else {
 %>
-<div class="container text-center" style="margin-top: 100px">
+<div class="container text-center" style="margin-top: 250px">
     <h1> Please login to continue</h1>
     <a class="navbar-brand" href="login.jsp"><img src="images/logo-3.png" alt="Badge" width="402"></a>
 </div>
