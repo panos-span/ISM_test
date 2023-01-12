@@ -101,7 +101,7 @@
         <div class="container text-center">
             <%
                 double total = 0;
-                int totalquantities = 0;
+                int totalSales = 0;
                 double averageprice = 0;
             %>
             <div class="row justify-content-center">
@@ -137,7 +137,7 @@
                                 </td>
                                 <%
                                     total += sale.getSale_value();
-                                    totalquantities += sale.getQuantity();
+                                    totalSales += 1;
                                 %>
                             </tr>
                             <%
@@ -167,8 +167,8 @@
 
             <br>
             <br>
-            <% if (totalquantities != 0) {
-                averageprice = total / totalquantities;
+            <% if (totalSales != 0) {
+                averageprice = total / totalSales;
             }
             %>
             <label class="form-label">Total: <%= total == 0 ? "" : String.format("%.2f", total)%> <i
